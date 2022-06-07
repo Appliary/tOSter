@@ -2,6 +2,7 @@ import BasicAuth from 'basic-auth';
 import Chalk from 'chalk';
 
 import Logs from '../utils/Logs.js';
+import Methods from '../utils/Methods.js';
 
 // Those are local adresses, who don't need authentication
 const LOCAL = [
@@ -9,17 +10,8 @@ const LOCAL = [
   '::1',
 ];
 
-const METHODS = {
-  'GET': Chalk.bold.cyan('GET '),
-  'POST': Chalk.bold.green('POST'),
-  'PATCH': Chalk.bold.blue('PTCH'),
-  'PUT': Chalk.bold.yellow('PUT '),
-  'DELETE': Chalk.bold.red('DEL '),
-  'OPTION': Chalk.bold.grey('OPT '),
-}
-
 export default function Auth(req, res, next) {
-  Logs.verbose('API', '🌐', METHODS[req.method] || req.method.slice(0,4).padEnd(4), Chalk.underline(req.path));
+  Logs.verbose('API', '🌐', Methods[req.method] || req.method.slice(0,4).padEnd(4), Chalk.underline(req.path));
 
   // Localhost, no pass required
   if (isLocal(req)) {

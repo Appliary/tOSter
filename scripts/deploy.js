@@ -6,7 +6,12 @@ const version = now.getUTCFullYear() - 2000;
 const subversion = (now.getUTCMonth()+1)*100 + now.getUTCDate();
 const patch = now.getUTCHours()*100 + now.getUTCMinutes();
 
-const v = `${version}.${subversion}.${patch}`;
+let v = `${version}.${subversion}.${patch}`;
 
-console.log('Setting version to', v);
-exec(`npm version ${v}`);
+exec('git branch --show-current', (err, branch) => {
+  if (branch != 'main') v += `-${branch}`;
+
+  console.log('Deployed version ', v);
+  exec(`npm version ${v} && git push`);
+});
+

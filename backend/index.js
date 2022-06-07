@@ -1,32 +1,26 @@
 #!/usr/bin/env node
 import Chalk from 'chalk';
 
-import Server from './Server.js';
+import { Get, Put, Post, Patch, Delete, Options } from './Server.js';
 import Logo from './utils/Logo.js';
 import Logs from './utils/Logs.js';
 import Package from './utils/package.cjs';
 
-// Importing routes
-import LedsList from './routes/Leds/List.js';
-import LedsIdentify from './routes/Leds/Identify.js';
-import Simon from './routes/Apps/Simon.js';
-import Shutdown from './routes/Admin/Shutdown.js';
-import ServeFrontend from './routes/ServeFrontend.js';
-
 // First prints
-Logs.info('BOOT', `✅ Started t${Chalk.bold.blueBright('OS')}ter ${Chalk.underline.green(`v${Package.version}`)}`);
 Logo();
+Logs.info('BOOT', `✅ Started t${Chalk.bold.blueBright('OS')}ter ${Chalk.underline.green(`v${Package.version}`)}`);
 
 // Setting routes
-Server
-  .get('/Leds', LedsList)
-  .get('/Leds/:id/Identify', LedsIdentify)
+Get('/Admin/Reboot', 'Admin/Reboot.js');
+Get('/Admin/Shutdown', 'Admin/Shutdown.js');
+Get('/Admin/Upgrade', 'Admin/Upgrade.js');
 
-  .get('/Apps/Simon/:action', Simon)
+Get('/Leds', 'Leds/List.js');
+Get('/Leds/:id/Identify', 'Leds/Identify.js');
 
-  .get('/Admin/Shutdown', Shutdown)
+Get('/Apps/Simon/:action', 'Apps/Simon.js');
 
-  .get('*', ServeFrontend);
+Get('*', 'ServeFrontend.js');
 
 // Handle process exits
 process

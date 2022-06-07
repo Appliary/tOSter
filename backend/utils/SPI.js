@@ -11,7 +11,7 @@ try {
   spi = SPI.initialize('/dev/spidev0.0');
   Logs.info('SPI', '🔌 Access to the LEDs through SPI has been initialized');
 } catch(err) {
-  Logs.error('SPI', '🔌 The SPI is not found, simulating');
+  Logs.error('SPI', `🔌 The SPI is ${Chalk.underline.red('not found')}, simulating`);
 }
 
 // Socket
@@ -78,7 +78,7 @@ export async function setLength() {
   if (length) {
     Logs.info('SPI', `🚥 Setting LED count to ${Chalk.yellow(length)}`);
   } else {
-    Logs.warn('SPI', '🚥 There is no LED configured, defaulting to 1');
+    Logs.warn('SPI', `🚥 There is ${Chalk.underline.yellow('no LED')} set, defaulting to 1`);
   }
 
   LEDS = new Dotstar(socket, {

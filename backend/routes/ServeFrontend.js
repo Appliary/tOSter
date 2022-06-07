@@ -9,6 +9,7 @@ export default function ServeFrontend(req, res) {
     res.sendFile(Path.resolve(
       Path.dirname(''),
       '..',
+      'frontend',
       'build',
       'index.html'
     ));
