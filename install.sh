@@ -3,7 +3,7 @@
 NODE_ARMV6L="https://unofficial-builds.nodejs.org/download/release/v18.3.0/node-v18.3.0-linux-armv6l.tar.xz"
 
 # Welcome the user
-cat ./scripts/logo.ansi
+cat ./resources/logo.ansi
 echo "[0;94mWelcome to the installation script of tOSter ![0m"
 echo '[0;94m══════════════════════════════════════════════[0m'
 echo ""
@@ -78,7 +78,7 @@ sudo raspi-config nonint do_spi 0             # Activate SPI
 sudo raspi-config nonint do_boot_behaviour B4 # Auto login
 
 echo "      ↳ Installing splashscreen"
-sudo cp ./scripts/logo.png /etc/splash.png
+sudo cp ./resources/logo.png /etc/splash.png
 
 echo "      ↳ Setting /boot/config.txt"
 sudo sh -c "echo 'disable_splash=1
@@ -92,9 +92,7 @@ echo "4️⃣  [1;4mConfiguring host[0m"
 
 echo "      ↳ Installing services"
 sudo cp ./services/* /lib/systemd/system
-sudo systemctl enable splash.service
-sudo systemctl enable tOSter.service
-sudo systemctl enable kiosk.service
+find ./services/* -type f -print0 | xargs -0 basename -a | xargs -0 sudo systemctl enable
 
 echo "      ↳ Configuring services"
 export WHOAMI=$USER

@@ -3,9 +3,9 @@ import BodyParser from 'body-parser';
 import Chalk from 'chalk';
 
 import Auth from './middlewares/Auth.js';
-import PoweredBy from './middlewares/PoweredBy.js';
-import Logs from './utils/Logs.js';
-import Methods from './utils/Methods.js';
+import PoweredBy from '../middlewares/PoweredBy.js';
+import Logs from '../utils/Logs.js';
+import Methods from '../utils/Methods.js';
 
 const PORT = process.env.PORT || 80;
 const Server = Express();

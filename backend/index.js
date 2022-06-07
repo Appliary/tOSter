@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import Chalk from 'chalk';
 
-import { Get, Put, Post, Patch, Delete, Options } from './Server.js';
+import { Get, Put, Post, Patch, Delete, Options } from './utils/Api.js';
 import Logo from './utils/Logo.js';
 import Logs from './utils/Logs.js';
 import Package from './utils/package.cjs';
