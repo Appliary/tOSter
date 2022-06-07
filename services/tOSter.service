@@ -1,0 +1,12 @@
+[Unit]
+Description=tOSter
+After=network-online.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+ExecStart=npm run prod
+StandardOutput=inherit
+StandardError=inherit
+Restart=always

@@ -1,0 +1,16 @@
+[Unit]
+Description=Chromium kiosk
+Wants=graphical.target
+After=graphical.target
+
+[Install]
+WantedBy=graphical.target
+
+[Service]
+Environment=DISPLaY=:0
+Environment=XAUTHORITY=/home/pi/.XAUTHORITYType=simple
+Type=simple
+ExecStart=/usr/bun/chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost
+Restart=always
+User=pi
+Group=pi
