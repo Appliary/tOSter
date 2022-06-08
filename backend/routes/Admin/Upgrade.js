@@ -9,7 +9,7 @@ export default function Upgrade(req, res) {
 
   // Upgrading server
   exec('git pull --force', (error, stdout, stderr) => {
+    // Send result to the frontend
     res.end(stdout);
   });
-  process.exit(0);
 }
