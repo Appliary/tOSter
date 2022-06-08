@@ -1,6 +1,6 @@
 # tOSter
 
-Operating System for your PROTOGEN.
+![tOSter: Operating System for your PROTOGEN](/resources/logo.png)
 
 ## 1. About
 
