@@ -1,6 +1,7 @@
 import WifiScan from 'wifiscanner';
 import Chalk from 'chalk';
 import WPA_Man from 'wpasupplicant-manager';
+import { exec } from 'child_process';
 
 import Logs from '#Utils/Logs';
 
@@ -8,7 +9,7 @@ const scanner = WifiScan();
 
 // Simulate if file not found
 let WPA = {
-  listwpa: [],
+  listwpa: [{ssid: 'simulatedList'}],
   addwpa(ssid, password) {
     this.listwpa.push({ssid});
   },
@@ -53,6 +54,18 @@ export async function RemoveWifi(req, res) {
   WPA.removewpa(req.params.ssid);
 
   res.end('ok');
+}
+
+// Get current
+export function CurrentWifi(req, res) {
+  exec('iwgetid -r', (err, stdout) => {
+    if (err) {
+      res.statusCode = 500;
+      res.end(err);
+    } else {
+      res.end(stdout);
+    }
+  });
 }
 
 // List all wifi available around
