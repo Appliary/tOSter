@@ -19,7 +19,8 @@ Server.use(Express.static('frontend/build'));
 // Registering routes
 function Route(method) {
   const METHOD = method.toUpperCase();
-  const m = method.toLowerCase();
+  let m = method.toLowerCase();
+  if (m == '*') m = 'all';
 
   if (!Methods[METHOD]) {
     return Logs.error('API', `🛣  Method not found: "${METHOD}"`);
@@ -42,6 +43,7 @@ export const Post = Route('POST');
 export const Patch = Route('PATCH');
 export const Delete = Route('DELETE');
 export const Options = Route('OPTIONS');
+export const Any = Route('*');
 
 // Start listening
 Server.listen(PORT, () => {

@@ -27,7 +27,7 @@ export default function Rainbow(req, res) {
 
 function start(req, res) {
   Logs.info('RAINBOW', '🌈 Starting rainbow');
-  Logs.silly('RAINBOW', 'Prolongated viewing of the rainbow mode may spread LGBTQIA+ acceptance.');
+  Logs.silly('RAINBOW', '🏳️‍🌈 Prolongated viewing of the rainbow mode may spread LGBTQIA+ acceptance.');
 
   // Stop current
   Pause();

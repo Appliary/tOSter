@@ -8,7 +8,6 @@ export default function ServeFrontend(req, res) {
     Logs.debug('FRONT', `Serving frontend for path '${Chalk.underline(req.path)}'`);
     res.sendFile(Path.resolve(
       Path.dirname(''),
-      '..',
       'frontend',
       'build',
       'index.html'
@@ -19,6 +18,6 @@ export default function ServeFrontend(req, res) {
   else {
     Logs.warn('FRONT', `File '${Chalk.underline(req.path)}' not found`);
     res.statusCode = 404;
-    res.end('Not found');
+    res.end('File not found');
   }
 }
