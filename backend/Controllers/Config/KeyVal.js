@@ -1,7 +1,7 @@
 import Config from '#Models/Config';
 
 export async function GetConfig(req, res) {
-  const data = await Config.findOneAsync({
+  const data = await Config.findOne({
     _id: req.params.key
   });
 
@@ -15,7 +15,7 @@ export async function GetConfig(req, res) {
 
 export async function SetConfig(req, res) {
   try {
-    await Config.updateAsync({
+    await Config.update({
       _id: req.params.key,
     }, {
       value: req.body

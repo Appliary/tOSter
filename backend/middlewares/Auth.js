@@ -2,7 +2,6 @@ import BasicAuth from 'basic-auth';
 import Chalk from 'chalk';
 
 import Logs from '#Utils/Logs';
-import Methods from '#Utils/Methods';
 
 // Those are local adresses, who don't need authentication
 const LOCAL = [
@@ -11,8 +10,6 @@ const LOCAL = [
 ];
 
 export default function Auth(req, res, next) {
-  Logs.verbose('API', '🌐', Methods[req.method] || req.method.slice(0,4).padEnd(4), Chalk.underline(req.path));
-
   // Localhost, no pass required
   if (isLocal(req)) {
     Logs.silly('AUTH', Chalk.gray(`🔓 Local request from '${req.connection.remoteAddress}', no auth required`));

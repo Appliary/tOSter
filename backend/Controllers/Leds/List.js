@@ -1,6 +1,6 @@
-import Leds from "#Models/Leds";
+import Led from "#Models/Led";
 
 export default async function LedsList(req, res) {
-  const list = await Leds.findAsync({});
+  const list = await Led.find({});
   return res.json(list);
 }

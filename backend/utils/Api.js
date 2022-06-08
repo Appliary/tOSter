@@ -4,16 +4,16 @@ import Chalk from 'chalk';
 
 import Auth from '#Middlewares/Auth';
 import PoweredBy from '#Middlewares/PoweredBy';
-import Logs from '#Utils/Logs';
 import Methods from '#Utils/Methods';
+import Logs from '#Utils/Logs';
 
 const PORT = process.env.PORT || 80;
 const Server = Express();
 
 // Registering plugins
 Server.use(BodyParser.urlencoded({ extended: false }));
-Server.use(Auth);
 Server.use(PoweredBy);
+Server.use(Auth);
 Server.use(Express.static('frontend/build'));
 
 // Registering routes
@@ -32,7 +32,7 @@ function Route(method) {
 
     try {
       // Load module
-      Logs.silly('API', `⚙️ Loading controller ${Chalk.underline(`Controllers/${file}.js`)}`);
+      Logs.silly('API', `🎛  Loading controller ${Chalk.underline(`Controllers/${file}.js`)}`);
       module = import(`../Controllers/${file}.js`);
     } catch (e) {
       Logs.error('API', `🛣  Error loading controller ${Chalk.underline(`Controllers/${file}.js`)}`, e);

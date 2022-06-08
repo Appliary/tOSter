@@ -15,7 +15,7 @@ const LVL = Object.keys(LEVELS);
 
 let logLevel = 'silly';
 try {
-  logLevel = Config.find({ _id: "logLevel" }).value || 'info';
+  logLevel = Config.findOne({ _id: "logLevel" }).value || 'info';
 } catch(e) {}
 
 // Overriding with env var

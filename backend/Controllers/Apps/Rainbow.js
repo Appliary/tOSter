@@ -1,18 +1,19 @@
-import Chalk from 'chalk';
-
+import { Pause, Play } from "#Utils/Draw";
 import Logs from "#Utils/Logs";
 import SPI from "#Utils/SPI";
-import { Pause, Play } from "#Utils/Draw";
+import Config from "#Models/Config";
 
 const FRAMERATE = 20; //ms
 const SHIFT = 4;
 let interval = null;
+let brightness = { value:1 };
 
-export default function Rainbow(req, res) {
+export default async function Rainbow(req, res) {
   // Route
   switch (req.params.action) {
     case 'start':
       start(req, res);
+      brightness = await Config.findOne({ _id: 'brightness' });
       break;
     case 'stop':
       stop(req, res);
@@ -73,6 +74,6 @@ function draw() {
   });
 
   // Set all leds
-  SPI.all(color[0], color[1], color[2]);
+  SPI.all(color[0], color[1], color[2], brightness.value);
   SPI.sync();
 }

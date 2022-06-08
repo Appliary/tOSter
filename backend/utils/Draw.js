@@ -13,7 +13,7 @@ export default function Draw(frames){
   redraw();
 }
 
-function redraw(){
+async function redraw(){
   // Clear ongoing timeout
   if (timeout) {
     clearTimeout(timeout);
@@ -28,7 +28,7 @@ function redraw(){
   }
 
   // Get global brightness
-  const brightness = Config.findOne({ _id: 'brightness' });
+  const brightness = await Config.findOne({ _id: 'brightness' });
 
   // Get frame, and reshift registry
   let frame = animation.shift();

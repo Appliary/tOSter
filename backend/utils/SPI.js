@@ -3,7 +3,7 @@ import SPI from "pi-spi";
 import Chalk from 'chalk';
 
 import Logs from "#Utils/Logs";
-import Leds from "#Models/Leds";
+import Led from "#Models/Led";
 
 // We try to connect to the SPI
 let spi;
@@ -35,7 +35,7 @@ const socket = {
   },
 };
 
-// Log ledd states for debug
+// Log led states for debug
 function simulate(buffer, cb) {
   const bytes = [...buffer];
 
@@ -73,7 +73,7 @@ let LEDS;
 await setLength();
 
 export async function setLength() {
-  const length = await Leds.countAsync();
+  const length = await Led.count();
 
   if (length) {
     Logs.info('SPI', `🚥 Setting LED count to ${Chalk.yellow(length)}`);

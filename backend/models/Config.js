@@ -1,37 +1,45 @@
-import Joi from 'joi';
+import Chalk from 'chalk';
 import NiceWare from 'niceware';
-import Model from "#Utils/Model";
+import { Document } from 'camo';
 
-export const Schema = Joi.alternatives([
-  {
-    _id: 'brightness',
-    value: Joi
-      .number()
-      .required()
-      .min(0)
-      .max(1)
-  },
-  {
-    _id: 'password',
-    value: Joi
-      .string()
-      .required()
-      .min(8)
-  },
-  {
-    _id: 'logLevel',
-    value: Joi
-      .string()
-      .required()
-      .valid('silly', 'debug', 'verbose', 'info', 'warn', 'error', 'fatal')
-      .default('info')
-  },
-]);
+import Logs from '#Utils/Logs';
 
-const Config = Model('config', Schema);
+export default class Config extends Document {
+  preValidate() {
+    if (this._id === 'brightness') this._schema.value = {
+      type: Number,
+      min: 0,
+      max: 1,
+    };
 
-Config.Init({ _id: 'brightness', value: 1 });
-Config.Init({ _id: 'logLevel', value: 'info' });
-Config.Init({ _id: 'password', value: NiceWare.generatePassphrase(4).join('-') });
+    if (this._id === 'logLevel') this._schema.value = {
+      type: String,
+      choices: ['silly', 'debug', 'verbose', 'info', 'warn', 'error', 'fatal', undefined],
+    };
 
-export default Config;
+    if (this._id === 'password') this._schema.value = {
+      type: String,
+    };
+  }
+}
+
+// Initial config
+init('logLevel', 'info');
+init('password', () => NiceWare.generatePassphrase(4).join('-'));
+init('brightness', 1);
+
+function init(key, value) {
+  setImmediate(async () => {
+    // Abort if we have already in DB
+    if (await Config.count({ _id: key })) return;
+
+    // Exec func
+    if (typeof value === 'function') value = value();
+
+    // Save
+    Config.create({ _id: key, value }).save();
+
+    // Log
+    Logs.verbose('CONF', `Initialized config ${Chalk.blue(key)} to ${Chalk.yellow.italic(JSON.stringify(value))}`);
+  });
+}

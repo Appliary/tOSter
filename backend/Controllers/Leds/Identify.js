@@ -1,13 +1,13 @@
-import Leds from "#Models/Leds";
+import Led from "#Models/Led";
 import Draw from "#Utils/Draw";
 import Logs from "#Utils/Logs";
 
-export default async function LedsIdentify(req, res) {
+export default async function IdentifyLed(req, res) {
   // Black it out
   Draw();
 
   // Get max ID available
-  const stripLength = await Leds.countAsync();
+  const stripLength = await Led.count();
 
   // Convert ID into an int, and validate
   const pos = parseInt(req.params.id);

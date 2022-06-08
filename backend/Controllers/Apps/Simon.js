@@ -12,9 +12,9 @@ let suite = [];
 let animation = [];
 let input = 0;
 let timeout = null;
-let oldAnim = [];
+let brightness = { value: 1 };
 
-export default function SimonRouter(req, res) {
+export default async function SimonRouter(req, res) {
   // Route
   switch (req.params.action) {
     case '0':
@@ -25,6 +25,7 @@ export default function SimonRouter(req, res) {
       break;
     case 'start':
       start();
+      brightness = await Config.findOne({ _id: 'brightness' });
       res.end('1');
       break;
     case 'stop':
@@ -70,9 +71,6 @@ function playSuite() {
 }
 
 function drawNextFrame() {
-  // Get global brightness
-  const brightness = Config.findOne({ _id: 'brightness' });
-
   // Consume the next frame
   const frame = animation.shift();
 
@@ -84,7 +82,7 @@ function drawNextFrame() {
   // Otherwise, set all leds to the color
   else {
     const color = COLORS[frame];
-    SPI.all(color.r || 0, color.g || 0, color.b || 0, brightness || 1);
+    SPI.all(color.r || 0, color.g || 0, color.b || 0, brightness.value || 1);
   }
 
   // Send command through SPI

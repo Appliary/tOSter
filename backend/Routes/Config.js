@@ -17,4 +17,4 @@ Get('/api/Config/Wifi/current', 'Config/Wifi', 'CurrentWifi');
 
 // Basic key/val configs
 Get('/api/Config/:key', 'Config/KeyVal', 'GetConfig');
-Post('/api/Config/:key', 'Config/KeyVal', 'SetConfig');
+Put('/api/Config/:key', 'Config/KeyVal', 'SetConfig');

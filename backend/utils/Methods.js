@@ -7,5 +7,5 @@ export default {
   'PUT': Chalk.bold.yellow('PUT '),
   'DELETE': Chalk.bold.red('DEL '),
   'OPTIONS': Chalk.bold.grey('OPT '),
-  '*': Chalk.bold.black('*   '),
+  '*': Chalk.bold.magenta('*   '),
 }
