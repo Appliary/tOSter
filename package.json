@@ -21,7 +21,8 @@
     "dotstar": "1.0.0",
     "express": "4.18.1",
     "pi-spi": "1.2.1",
-    "wifiscanner": "1.0.1"
+    "wifiscanner": "1.0.1",
+    "wpasupplicant-manager": "^0.1.0"
   },
   "devDependencies": {
     "nodemon": "2.0.16"
@@ -37,6 +38,7 @@
   "imports": {
     "#Middlewares/*": "./backend/Middlewares/*.js",
     "#Models/*": "./backend/Models/*.js",
+    "#Controllers/*": "./backend/Controllers/*.js",
     "#Routes/*": "./backend/Routes/*.js",
     "#Utils/*": "./backend/Utils/*.js"
   }
