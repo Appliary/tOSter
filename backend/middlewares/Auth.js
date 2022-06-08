@@ -1,8 +1,8 @@
 import BasicAuth from 'basic-auth';
 import Chalk from 'chalk';
 
-import Logs from '../utils/Logs.js';
-import Methods from '../utils/Methods.js';
+import Logs from '#Utils/Logs';
+import Methods from '#Utils/Methods';
 
 // Those are local adresses, who don't need authentication
 const LOCAL = [

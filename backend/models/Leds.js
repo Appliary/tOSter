@@ -1,3 +1,3 @@
-import Model from "../utils/Model.js";
+import Model from "#Utils/Model";
 
 export default Model('leds');

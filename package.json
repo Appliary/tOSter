@@ -33,5 +33,11 @@
     "watch": [
       "backend/"
     ]
+  },
+  "imports": {
+    "#Middlewares/*": "./backend/Middlewares/*.js",
+    "#Models/*": "./backend/Models/*.js",
+    "#Routes/*": "./backend/Routes/*.js",
+    "#Utils/*": "./backend/Utils/*.js"
   }
 }

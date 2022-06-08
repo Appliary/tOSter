@@ -2,8 +2,8 @@ import { Dotstar } from "dotstar";
 import SPI from "pi-spi";
 import Chalk from 'chalk';
 
-import Logs from "./Logs.js";
-import Leds from "../models/Leds.js";
+import Logs from "#Utils/Logs";
+import Leds from "#Models/Leds";
 
 // We try to connect to the SPI
 let spi;

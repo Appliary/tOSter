@@ -1,6 +1,6 @@
 import Path from 'path';
 import Chalk from 'chalk';
-import Logs from '../utils/Logs.js';
+import Logs from '#Utils/Logs';
 
 export default function ServeFrontend(req, res) {
   // Check if asking for HTML

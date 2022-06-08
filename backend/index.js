@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import Chalk from 'chalk';
 
-import Logo from './utils/Logo.js';
-import Logs from './utils/Logs.js';
-import Package from './utils/package.cjs';
+import Logo from '#Utils/Logo';
+import Logs from '#Utils/Logs';
+import Package from './Utils/package.cjs';
 
 // First prints
 Logo();

@@ -1,7 +1,6 @@
-import SPI from "./SPI.js";
-
-import Config from "../models/Config.js";
-import Logs from "./Logs.js";
+import SPI from "#Utils/SPI";
+import Logs from "#Utils/Logs";
+import Config from "#Models/Config";
 
 let animation = [];
 let previous = [];

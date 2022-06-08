@@ -1,7 +1,7 @@
 import { exec } from 'child_process';
 import Chalk from 'chalk';
 
-import Logs from '../../utils/Logs.js';
+import Logs from '#Utils/Logs';
 
 export default function Shutdown(req, res) {
   res.end('ok');

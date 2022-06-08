@@ -1,6 +1,6 @@
-import Leds from "../../models/Leds.js";
-import Draw from "../../utils/Draw.js";
-import Logs from "../../utils/Logs.js";
+import Leds from "#Models/Leds";
+import Draw from "#Utils/Draw";
+import Logs from "#Utils/Logs";
 
 export default async function LedsIdentify(req, res) {
   // Black it out

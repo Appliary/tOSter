@@ -1,10 +1,10 @@
 import Chalk from 'chalk';
 
-import Logs from "../../utils/Logs.js";
-import SPI from "../../utils/SPI.js";
-import {Pause, Play} from "../../utils/Draw.js";
+import Logs from "#Utils/Logs";
+import SPI from "#Utils/SPI";
+import {Pause, Play} from "#Utils/Draw";
 
-import Config from "../../models/Config.js";
+import Config from "#Models/Config";
 
 const COLORS = [{r:255}, {g:255}, {b:255}, {r:255, g:255}];
 

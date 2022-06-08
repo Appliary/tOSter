@@ -1,6 +1,6 @@
 import Chalk from 'chalk';
 
-import Config from '../models/Config.js';
+import Config from '#Models/Config';
 
 const LEVELS = {
   'fatal': 'red',

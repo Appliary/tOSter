@@ -1,4 +1,4 @@
-import Model from "../utils/Model.js";
+import Model from "#Utils/Model";
 
 const Config = Model('config');
 
