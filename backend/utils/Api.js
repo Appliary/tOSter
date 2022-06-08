@@ -26,17 +26,38 @@ function Route(method) {
     return Logs.error('API', `🛣  Method not found: "${METHOD}"`);
   }
 
-  return (path, handlerFile) => {
-    try{
-      const module = import(`../routes/${handlerFile}`);
-      Server[m](path, async (req, res) => (await module).default(req, res));
-      Logs.verbose('API', `🛣  Registered route ${Methods[METHOD]}  ${Chalk.underline(path)}`);
+  // Load handler from file
+  return (path, file, exp = 'default') => {
+    let module;
+
+    try {
+      // Load module
+      Logs.silly('API', `⚙️ Loading controller ${Chalk.underline(`Controllers/${file}.js`)}`);
+      module = import(`../Controllers/${file}.js`);
     } catch (e) {
-      Logs.error('API', `🛣  Error registering route: "${method}"`);
+      Logs.error('API', `🛣  Error loading controller ${Chalk.underline(`Controllers/${file}.js`)}`, e);
+    }
+
+    try {
+      // Build handler
+      const handlerBuilder = async (req, res) => {
+        const controller = await module;
+        const handler = controller[exp || 'default'] || controller.default;
+        return handler(req, res);
+      };
+
+      // Register to server
+      Server[m](path, handlerBuilder);
+
+      // Printout
+      Logs.verbose('API', `🛣  ${Chalk.green.bold('Registered route')} ${Methods[METHOD]} ${Chalk.underline(path)}`);
+    } catch (e) {
+      Logs.error('API', `🛣  Error registering route ${Methods[METHOD]} ${Chalk.underline(path)}`, e);
     }
   }
 }
 
+// Exporting methods
 export const Get = Route('GET');
 export const Put = Route('PUT');
 export const Post = Route('POST');

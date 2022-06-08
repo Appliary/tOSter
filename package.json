@@ -6,22 +6,22 @@
   "author": "MicCarr <miccarr@me.com>",
   "license": "copyright",
   "scripts": {
-    "prod": "node backend/index.js",
     "start": "nodemon backend/index.js",
+    "debug": "LOGLEVEL=silly npm start",
     "deploy": "node scripts/deploy.js",
+    "prod": "node backend/index.js",
     "front": "cd frontend;npm i && npm start;cd ..",
     "front:build": "cd frontend;npm i && npm run build;cd ..",
     "front:test": "cd frontend;npm i && npm run test;cd .."
   },
   "dependencies": {
     "@seald-io/nedb": "3.0.0",
-    "@treehouses/cli": "^1.26.6",
     "basic-auth": "2.0.1",
     "chalk": "5.0.1",
     "dotstar": "1.0.0",
     "express": "4.18.1",
     "pi-spi": "1.2.1",
-    "wifiscanner": "^1.0.1"
+    "wifiscanner": "1.0.1"
   },
   "devDependencies": {
     "nodemon": "2.0.16"
