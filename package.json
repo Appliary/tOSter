@@ -20,9 +20,11 @@
     "chalk": "5.0.1",
     "dotstar": "1.0.0",
     "express": "4.18.1",
+    "joi": "17.6.0",
+    "niceware": "3.0.0",
     "pi-spi": "1.2.1",
     "wifiscanner": "1.0.1",
-    "wpasupplicant-manager": "^0.1.0"
+    "wpasupplicant-manager": "0.1.0"
   },
   "devDependencies": {
     "nodemon": "2.0.16"

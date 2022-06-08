@@ -1,11 +1,16 @@
-import WifiScan from 'wifiscanner';
+import OS from 'os';
 import Chalk from 'chalk';
+import WifiScan from 'wifiscanner';
 import WPA_Man from 'wpasupplicant-manager';
 import { exec } from 'child_process';
 
 import Logs from '#Utils/Logs';
 
 const scanner = WifiScan();
+
+const GETCURRENT = (OS.platform() === 'darwin')
+  ? "/Sy*/L*/Priv*/Apple8*/V*/C*/R*/airport -I | awk '/ SSID:/ {print $2}'"
+  : 'iwgetid -r';
 
 // Simulate if file not found
 let WPA = {
@@ -58,12 +63,12 @@ export async function RemoveWifi(req, res) {
 
 // Get current
 export function CurrentWifi(req, res) {
-  exec('iwgetid -r', (err, stdout) => {
+  exec(GETCURRENT, (err, stdout) => {
     if (err) {
       res.statusCode = 500;
-      res.end(err);
+      res.end(err.toString());
     } else {
-      res.end(stdout);
+      res.end(stdout.toString());
     }
   });
 }
