@@ -2,10 +2,10 @@ import Express from 'express';
 import BodyParser from 'body-parser';
 import Chalk from 'chalk';
 
-import Auth from './middlewares/Auth.js';
+import Auth from '../middlewares/Auth.js';
 import PoweredBy from '../middlewares/PoweredBy.js';
-import Logs from '../utils/Logs.js';
-import Methods from '../utils/Methods.js';
+import Logs from './Logs.js';
+import Methods from './Methods.js';
 
 const PORT = process.env.PORT || 80;
 const Server = Express();
@@ -27,7 +27,7 @@ function Route(method) {
 
   return (path, handlerFile) => {
     try{
-      const module = import(`./routes/${handlerFile}`);
+      const module = import(`../routes/${handlerFile}`);
       Server[m](path, async (req, res) => (await module).default(req, res));
       Logs.verbose('API', `🛣  Registered route ${Methods[METHOD]}  ${Chalk.underline(path)}`);
     } catch (e) {

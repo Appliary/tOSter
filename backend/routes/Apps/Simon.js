@@ -2,7 +2,7 @@ import Chalk from 'chalk';
 
 import Logs from "../../utils/Logs.js";
 import SPI from "../../utils/SPI.js";
-import Draw, {animation as getAnim} from "../../utils/Draw.js";
+import {Pause, Play} from "../../utils/Draw.js";
 
 import Config from "../../models/Config.js";
 
@@ -15,10 +15,6 @@ let timeout = null;
 let oldAnim = [];
 
 export default function SimonRouter(req, res) {
-  // Get current animation and clear
-  oldAnim = getAnim;
-  Draw();
-
   // Route
   switch (req.params.action) {
     case '0':
@@ -28,15 +24,12 @@ export default function SimonRouter(req, res) {
       pushColor(req.params.action, res);
       break;
     case 'start':
-      Logs.info('SIMON', '👾 Starting new SIMON');
-      suite = [];
-      newColor();
-      res.end('1')
+      start();
+      res.end('1');
       break;
     case 'stop':
       stop();
       res.end('stopped');
-      Logs.verbose('SIMON', `🛑 Simon stopped`);
       break;
     default:
       res.statusCode = 404;
@@ -101,7 +94,18 @@ function drawNextFrame() {
   if(animation.length) timeout = setTimeout(drawNextFrame, 500);
 }
 
+function start() {
+  // Pause previous animation
+  Pause();
+
+  Logs.info('SIMON', '👾 Starting new SIMON');
+  suite = [];
+  newColor();
+}
+
 function stop(){
+  Logs.verbose('SIMON', `🛑 Simon stopped`);
+
   // Clean timeout
   if (timeout !== null) {
     clearTimeout(timeout);
@@ -112,8 +116,8 @@ function stop(){
   animation = [];
   input = 0;
 
-  // Set previous animation
-  Draw(oldAnim);
+  // Restart previous animation
+  Play();
 }
 
 function pushColor(color, res) {

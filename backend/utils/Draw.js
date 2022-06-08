@@ -3,7 +3,8 @@ import SPI from "./SPI.js";
 import Config from "../models/Config.js";
 import Logs from "./Logs.js";
 
-export let animation = [];
+let animation = [];
+let previous = [];
 let timeout = null;
 
 export default function Draw(frames){
@@ -57,4 +58,20 @@ function redraw(){
   if (frame.duration) {
     timeout = setTimeout(redraw, frame.duration);
   }
+}
+
+export function Pause() {
+  if (previous.length) {
+    Logs.warn('DRAW', '⏸ Already paused.');
+  } else {
+    Logs.verbose('DRAW', '⏸ Pausing drawing routine');
+    previous = animation;
+  }
+  Draw();
+}
+
+export function Play() {
+  Logs.verbose('DRAW', '⏯  Restarting drawing routine');
+  Draw(previous);
+  previous = [];
 }

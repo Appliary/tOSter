@@ -19,6 +19,7 @@ Get('/Leds', 'Leds/List.js');
 Get('/Leds/:id/Identify', 'Leds/Identify.js');
 
 Get('/Apps/Simon/:action', 'Apps/Simon.js');
+Get('/Apps/Rainbow/:action', 'Apps/Rainbow.js');
 
 Get('*', 'ServeFrontend.js');
 

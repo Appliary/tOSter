@@ -4,7 +4,7 @@ import Path from 'path';
 export default function Logo(){
   const file = Path.resolve(
     Path.dirname(''),
-    'scripts',
+    'resources',
     'logo.ansi'
   );
 
