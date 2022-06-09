@@ -1,11 +1,5 @@
 import {
   Get,
-  Put,
-  Post,
-  Patch,
-  Delete,
-  Options,
-  Any
 } from '#Utils/Api';
 
 Get('/api/Admin/Reboot', 'Admin/Reboot');

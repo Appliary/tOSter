@@ -11,7 +11,7 @@ export default async function IdentifyLed(req, res) {
   const led = await Led.findOne({ address });
   if (!led) {
     res.statusCode = 404;
-    res.end('Not found');
+    return res.end('Not found');
   }
 
   // Black it out
