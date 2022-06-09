@@ -22,5 +22,6 @@ export default async function RemoveLed(req, res) {
   }
 
   // Return result
+  res.statusCode = 204;
   return res.end('ok');
 }

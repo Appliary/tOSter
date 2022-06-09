@@ -5,7 +5,7 @@ export default async function EditLed(req, res) {
   let address = parseInt(req.param.address);
 
   // Save in DB
-  const led = await Led.fondOneAndUpdate({
+  const led = await Led.findOneAndUpdate({
     address
   }, req.body);
 
