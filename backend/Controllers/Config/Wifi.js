@@ -28,7 +28,7 @@ try {
   const WPA = new WPA_Man.default();
   Logs.debug('WIFI', `📄 Loaded WPA Supplicant config file with ${Chalk.yellow.bold(WPA.listwpa.length)} entries`);
 } catch(e) {
-  Logs.error('WIFI', '📄 Error loading WPA Supplicant config file');
+  Logs.error('WIFI', '📄 Error loading WPA Supplicant config file, simulating');
 }
 
 // list wifi settings

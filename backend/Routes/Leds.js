@@ -9,4 +9,5 @@ import {
 } from '#Utils/Api';
 
 Get('/api/Leds', 'Leds/List');
-Get('/api/Leds/:id/Identify', 'Leds/Identify');
+Get('/api/Leds/:address/Identify', 'Leds/Identify');
+Put('/api/Leds/:address', 'Leds/Add');

@@ -1,33 +1,33 @@
 import { Document } from 'camo';
 
+import { Integer, ObjectProps } from '#Utils/Validate';
+import { Init } from '#Utils/DB';
+
 export default class Led extends Document {
-  // constructor() {
-  //   super();
+  constructor() {
+    super();
 
-  //   this.position = {
-  //     type: Object,
-  //     unique: true,
-  //     validate(pos) {
-  //       const unknownProps = Object.keys(pos).filter(key=>['x', 'y'].includes(key));
-  //       if (unknownProps.length) {
-  //         throw new Error(`Property "position.${unknownProps[0]}" not allowed.`);
-  //       }
+    this.address = {
+      type: Number,
+      unique: true,
+      required: true,
+      validate(addr) {
+        Integer('address', addr);
+        return true;
+      }
+    }
 
-  //       if(!Number.isSafeInteger(pos.x)) {
-  //         throw new Error('The "position.x" property should be an integer and is required.');
-  //       }
-  //       if(!Number.isSafeInteger(pos.y)) {
-  //         throw new Error('The "position.y" property should be an integer and is required.');
-  //       }
-  //       return true;
-  //     }
-  //   }
-  // }
-
-  // async preSave() {
-  //   if (!this._id) {
-  //     const count = Led.count({});
-  //     this._id = count.toString();
-  //   }
-  // }
+    this.position = {
+      type: Object,
+      unique: true,
+      validate(pos) {
+        ObjectProps('position', pos, [ 'x', 'y' ]);
+        Integer('position.x', pos.x);
+        Integer('position.y', pos.y);
+        return true;
+      }
+    }
+  }
 }
+
+Init(Led, {_id:'foo',address:0, position:{x:0, y:0}})

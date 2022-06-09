@@ -2,7 +2,7 @@ import Chalk from 'chalk';
 import NiceWare from 'niceware';
 import { Document } from 'camo';
 
-import Logs from '#Utils/Logs';
+import { Init } from '#Utils/DB';
 
 export default class Config extends Document {
   preValidate() {
@@ -24,22 +24,6 @@ export default class Config extends Document {
 }
 
 // Initial config
-init('logLevel', 'info');
-init('password', () => NiceWare.generatePassphrase(4).join('-'));
-init('brightness', 1);
-
-function init(key, value) {
-  setImmediate(async () => {
-    // Abort if we have already in DB
-    if (await Config.count({ _id: key })) return;
-
-    // Exec func
-    if (typeof value === 'function') value = value();
-
-    // Save
-    Config.create({ _id: key, value }).save();
-
-    // Log
-    Logs.verbose('CONF', `Initialized config ${Chalk.blue(key)} to ${Chalk.yellow.italic(JSON.stringify(value))}`);
-  });
-}
+Init(Config, { _id: 'logLevel', value: 'info' });
+Init(Config, { _id: 'password', value: () => NiceWare.generatePassphrase(4).join('-') });
+Init(Config, { _id: 'brightness', value: 1 });
