@@ -16,9 +16,15 @@ This code is intended to run on a [Raspberry Pi](/docs/tech/hardware/raspberry.m
 
 `// TODO`
 
-## 4. Installation
+## 4. Install
 
-`// TODO`
+On a fresh [Raspberry Lite](/docs/tech/software/os.md) install, connect into SSH and do :
+```
+sudo apt update && sudo apt install -y git
+git clone https://github.com/Appliary/tOSter.git
+cd tOSter
+./install.sh
+```
 
 ## 5. Documentation
 
