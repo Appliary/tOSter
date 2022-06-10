@@ -102,7 +102,11 @@ function ensure_in_file {
   if grep -q "$2" "$1"; then
     echo "          - [[90mALREADY SET[0m] $2";
   else
-    sudo sh -c "echo -ne '$2'>>$1";
+    if [[ -z $3 ]]; then
+      sudo sh -c "echo -ne '$2'>>$1";
+    else
+      sudo sh -c "echo -e '$2'>>$1";
+    fi
     echo "          - [[32m   ADDED   [0m] $2";
   fi
 }
@@ -110,14 +114,14 @@ function ensure_in_file {
 echo "";
 echo "      ↳ Setting /boot/config.txt";
 
-ensure_in_file "/boot/config.txt" "\nmax_usb_current=1"
-ensure_in_file "/boot/config.txt" "\nhdmi_drive=1"
-ensure_in_file "/boot/config.txt" "\nhdmi_group=2"
-ensure_in_file "/boot/config.txt" "\nhdmi_mode=1"
-ensure_in_file "/boot/config.txt" "\nhdmi_mode=87"
-ensure_in_file "/boot/config.txt" "\nhdmi_cvt 800 480 60 6 0 0 0"
-ensure_in_file "/boot/config.txt" "\ndtparam=spi=on"
-ensure_in_file "/boot/config.txt" "\ndisable_splash=1"
+ensure_in_file "/boot/config.txt" "max_usb_current=1" true
+ensure_in_file "/boot/config.txt" "hdmi_drive=1" true
+ensure_in_file "/boot/config.txt" "hdmi_group=2" true
+ensure_in_file "/boot/config.txt" "hdmi_mode=1" true
+ensure_in_file "/boot/config.txt" "hdmi_mode=87" true
+ensure_in_file "/boot/config.txt" "hdmi_cvt 800 480 60 6 0 0 0" true
+ensure_in_file "/boot/config.txt" "dtparam=spi=on" true
+ensure_in_file "/boot/config.txt" "disable_splash=1" true
 
 echo "";
 echo "      ↳ Setting /boot/cmdline.txt"
