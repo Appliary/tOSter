@@ -4,74 +4,75 @@ export TMPDIR = "/tmp/tOSter-install";
 export NODE_ARMV6L="https://unofficial-builds.nodejs.org/download/release/v18.3.0/node-v18.3.0-linux-armv6l.tar.xz";
 
 # Welcome the user
-cat ./resources/logo.ansi
-echo "[0;94mWelcome to the installation script of tOSter ![0m"
-echo '[0;94m══════════════════════════════════════════════[0m'
-echo ""
-echo ""
+cat ./resources/logo.ansi;
+echo "[0;94mWelcome to the installation script of tOSter ![0m";
+echo "[0;94m══════════════════════════════════════════════[0m";
+echo "";
+echo "";
 
+# Check we are on raspberry
 [[ -f /boot/config.txt ]] || {
-  echo "❌  [31mPlease run this on raspberry ![0m"
+  echo "❌  [31mPlease run this on raspberry ![0m";
   exit 1;
 }
 
 # Install NodeJS
-echo "1️⃣  [1;4mInstalling NodeJS[0m"
-echo ""
-[[ -z `which node` ]] && {
-  echo "    [93mNodeJS is not installed.[0m"
+echo "1️⃣  [1;4mInstalling NodeJS[0m";
+echo "";
+if [[ -z `which node` ]]; then
+  echo "    [93mNodeJS is not installed.[0m";
 
   # Check for Raspberry or other
-  [[ $(uname -m) = "armv6l" ]] && {
-    echo "✅  [32mNode $(node -v) already installed[0m"
-  } || {
-    mkdir -p /tmp/tOSter-install
+  if [[ $(uname -m) = "armv6l" ]]; then
+    mkdir -p /tmp/tOSter-install;
 
-    echo "      ↳ Retrieving Raspberry unofficial builds : [2m$NODE_ARMV6L[0m"
+    echo "      ↳ Retrieving Raspberry unofficial builds : [2m$NODE_ARMV6L[0m";
     wget $NODE_ARMV6L $TMPDIR/node.tar.xz;
 
-    echo "      ↳ Unarchiving"
-    tar xvfJ $TMPDIR/node-* $TMPDIR
+    echo "      ↳ Unarchiving";
+    tar xvfJ $TMPDIR/node-* $TMPDIR;
 
-    echo "      ↳ Copying"
-    sudo cp -R $TMPDIR/node-*/* /usr/local
+    echo "      ↳ Copying";
+    sudo cp -R $TMPDIR/node-*/* /usr/local;
 
-    echo "      ↳ Cleaning"
+    echo "      ↳ Cleaning";
     rm -rf $TMPDIR;
-  } || {
-    echo "      ↳ Installing NVM"
-    wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-    export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+  else
+    echo "      ↳ Installing NVM";
+    wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash;
+    export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")";
 
-    echo "      ↳ Installing NodeJS from NVM"
-    $NVM_DIR/nvm.sh install stable
-    $NVM_DIR/nvm.sh use stable
-  }
+    echo "      ↳ Installing NodeJS from NVM";
+    $NVM_DIR/nvm.sh install stable;
+    $NVM_DIR/nvm.sh use stable;
+  fi
 
   # Ensure path
-  PATH=$PATH:/usr/local/bin
+  PATH=$PATH:/usr/local/bin;
 
   # Check if installed
   [[ -z `which node` ]] || {
-    echo "❌  [31mInstallation failed. Please install on your own.[0m"
+    echo "❌  [31mInstallation failed. Please install on your own.[0m";
     exit 1;
   }
 
-  echo "✅  [32mNode $(node -v) has been installed[0m"
-}
+  echo "✅  [32mNode $(node -v) has been installed[0m";
+else
+  echo "✅  [32mNode $(node -v) already installed[0m";
+fi
 
 # Install dependencies
-echo "2️⃣  [1;4mInstalling Dependencies[0m"
+echo "2️⃣  [1;4mInstalling Dependencies[0m";
 npm i --production --no-audit || {
-  echo "❌  [31mDependencies installation failed, install on your own through NPM.[0m"
-  exit 1
+  echo "❌  [31mDependencies installation failed, install on your own through NPM.[0m";
+  exit 1;
 }
 
 # Configuring host
-echo "3️⃣  [1;4mConfiguring host[0m"
+echo "3️⃣  [1;4mConfiguring host[0m";
 
-echo "      ↳ Installing required packages"
-sudo apt-get install -y fbi
+echo "      ↳ Installing required packages";
+sudo apt-get install -y fbi;
 
 echo "      ↳ Raspi config"
 sudo raspi-config nonint do_hostname tOSter   # Change hostname
