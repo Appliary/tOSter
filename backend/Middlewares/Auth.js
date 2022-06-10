@@ -26,15 +26,15 @@ export default async function Auth(req, res, next) {
       Logs.silly('AUTH', Chalk.green('🔐 Credentials OK'));
       return next();
     } else {
-      Logs.warn('AUTH', Chalk.red(`🗝 Wrong key`));
-      res.set('WWW-Authenticate', 'Basic realm="tOSter: Wrong, retry"');
-      return res.status(401).send("🙅🏻 Forbidden");
+      Logs.warn('AUTH', Chalk.red(`🗝  Wrong key`));
+      res.set('WWW-Authenticate', 'Basic realm="tOSter"');
+      return res.status(401).send("🙅🏻 Wrong key");
     }
   }
 
   // If no valid creds
   Logs.silly('AUTH', Chalk.yellowBright(`🔒 Asking for credentials to '${req.connection.remoteAddress}'`));
-  res.set('WWW-Authenticate', 'Basic realm="tOSter: Please login"');
+  res.set('WWW-Authenticate', 'Basic realm="tOSter"');
   return res.status(401).send("🙅🏻 Forbidden");
 };
 
