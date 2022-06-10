@@ -30,29 +30,29 @@ if [[ -z `which node` ]]; then
   if [[ $(uname -m) = "armv6l" ]]; then
     mkdir -p /tmp/tOSter-install;
 
-    echo ""
+    echo "";
     echo "      ↳ Retrieving NodeJS unofficial builds for ARMv6l : [2m$NODE_ARMV6L[0m";
     wget -q --show-progress $NODE_ARMV6L -O $TMPDIR/node.tar.xz;
 
-    echo ""
+    echo "";
     echo "      ↳ Unarchiving";
     tar xvfJ $TMPDIR/node.tar.xz -C $TMPDIR | xargs -n 1 echo -ne "\\033[K\\033[10G$@";
 
-    echo ""
+    echo "";
     echo "      ↳ Copying files";
     sudo rsync -av $TMPDIR/node-*/* /usr/local | xargs -n 1 echo -ne "\\033[K\\033[10G$@";
     echo -e "\\033[K\\033[10GDone"
 
-    echo ""
+    echo "";
     echo "      ↳ Cleaning";
     rm -rf $TMPDIR;
   else
-    echo ""
+    echo "";
     echo "      ↳ Installing NVM";
     wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash;
     export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")";
 
-    echo ""
+    echo "";
     echo "      ↳ Installing NodeJS from NVM";
     $NVM_DIR/nvm.sh install stable;
     $NVM_DIR/nvm.sh use stable;
@@ -71,8 +71,8 @@ else
 fi
 
 # Install dependencies
-echo ""
-echo ""
+echo "";
+echo "";
 echo "2️⃣  [1;4mInstalling node_modules[0m";
 npm i --omit=dev --no-audit || {
   echo "❌  [31mModules installation failed, install on your own through `npm i`.[0m";
@@ -80,63 +80,78 @@ npm i --omit=dev --no-audit || {
 }
 
 # Configuring host
-echo ""
-echo ""
+echo "";
+echo "";
 echo "3️⃣  [1;4mConfiguring host[0m";
 
-echo ""
+echo "";
 echo "      ↳ Installing required apt packages";
 cat ./resources/packages.apt | xargs sudo apt-get install -y --no-install-recommends $@;
 
-echo ""
-echo "      ↳ Raspi config"
-sudo raspi-config nonint do_spi 0             # Activate SPI
-#sudo raspi-config nonint do_boot_behaviour B4 # Auto login
+echo "";
+echo "      ↳ Raspi config";
+echo "          - Activating SPI";
+sudo raspi-config nonint do_spi 0;
 
-echo ""
-echo "      ↳ Installing splashscreen"
+echo "";
+echo "      ↳ Installing splashscreen";
 sudo cp ./resources/logo.png /usr/share/plymouth/themes/pix/splash.png;
 sudo cp ./resources/logo.ansi /etc/motd;
 
-echo ""
-echo "      ↳ Setting /boot/config.txt"
-sudo sh -c "echo -n '
-max_usb_current=1
-hdmi_drive=1
-hdmi_group=2
-hdmi_mode=1
-hdmi_mode=87
-hdmi_cvt 800 480 60 6 0 0 0
-dtparam=spi=on
-disable_splash=1
-'>>/boot/config.txt";
+function ensure_in_file {
+  if grep -q "$2" "$1"; then
+    echo "          - [[90mALREADY SET[0m] $2";
+  else
+    sudo sh -c "echo -ne '$2'>>$1";
+    echo "          - [[32m   ADDED   [0m] $2";
+  fi
+}
 
-echo ""
+echo "";
+echo "      ↳ Setting /boot/config.txt";
+
+ensure_in_file "/boot/config.txt" "\nmax_usb_current=1"
+ensure_in_file "/boot/config.txt" "\nhdmi_drive=1"
+ensure_in_file "/boot/config.txt" "\nhdmi_group=2"
+ensure_in_file "/boot/config.txt" "\nhdmi_mode=1"
+ensure_in_file "/boot/config.txt" "\nhdmi_mode=87"
+ensure_in_file "/boot/config.txt" "\nhdmi_cvt 800 480 60 6 0 0 0"
+ensure_in_file "/boot/config.txt" "\ndtparam=spi=on"
+ensure_in_file "/boot/config.txt" "\ndisable_splash=1"
+
+echo "";
 echo "      ↳ Setting /boot/cmdline.txt"
-sudo sh -c 'echo -n " console=tty3 quiet splash loglevel=3 logo.nologo">>/boot/cmdline.txt';
+
+ensure_in_file "/boot/cmdline.txt" " console=tty3"
+ensure_in_file "/boot/cmdline.txt" " quiet"
+ensure_in_file "/boot/cmdline.txt" " splash"
+ensure_in_file "/boot/cmdline.txt" " loglevel=3"
+ensure_in_file "/boot/cmdline.txt" " logo.nologo"
 
 # Installing services
-echo ""
-echo ""
+echo "";
+echo "";
 echo "4️⃣  [1;4mConfiguring host[0m";
 
-echo ""
+echo "";
 echo "      ↳ Installing services";
 sudo cp ./services/* /lib/systemd/system;
 find ./services/* -type f -print0 | xargs -0 basename -a | xargs -n 1 sudo systemctl enable $@;
 
-echo ""
+echo "";
 echo "      ↳ Configuring services";
 find ./services/* -type f -print0 | xargs -0 basename -a | xargs -n 1 sudo sh -c "echo 'WorkingDirectory=$(pwd)'>>/lib/systemd/system/tOSter.service"
 
-echo ""
+echo "";
 echo "      ↳ Opening port 80 for node";
 sudo setcap cap_net_bind_service=+ep `readlink -f \`which node\``;
 
 # Reboot
-echo ""
-echo ""
-echo "5️⃣  [1;4mReboot[0m"
-echo "      ↳ Rebooting in 10s"
-sleep 10
-sudo reboot
+echo "";
+echo "";
+echo "5️⃣  [1;4mReboot[0m";
+echo "      ↳ Rebooting in 5s";
+echo "";
+
+sleep 5;
+sudo reboot;
