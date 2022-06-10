@@ -1,7 +1,7 @@
 import Draw from "#Utils/Draw";
 import { ObjectProps } from "#Utils/Validate";
 
-export default function (req, res) {
+export default function Preview(req, res) {
   let animation = req.body;
 
   // Ensure array

@@ -87,3 +87,9 @@ export async function setLength() {
 }
 
 export default LEDS;
+
+process
+  .on('SIGINT', () => {
+    LEDS.clear();
+    LEDS.sync();
+  })
