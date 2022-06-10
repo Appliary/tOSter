@@ -4,7 +4,7 @@ import Logs from "#Utils/Logs";
 
 export default async function IdentifyLed(req, res) {
   // Get led address
-  let address = parseInt(req.param.address);
+  let address = parseInt(req.params.address);
   Logs.verbose('LEDS', `🆔 Identifying LED #${address}`);
 
   // Check if led exists

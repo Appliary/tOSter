@@ -2,7 +2,7 @@ import Led from "#Models/Led";
 
 export default async function AddLed(req, res) {
   // Get led address
-  let address = parseInt(req.param.address);
+  let address = parseInt(req.params.address);
   if (!address) address = await Led.count();
 
   // Shift greater addresses

@@ -2,7 +2,7 @@ import Led from "#Models/Led";
 
 export default async function RemoveLed(req, res) {
   // Get led address
-  let address = parseInt(req.param.address);
+  let address = parseInt(req.params.address);
 
   // Delete from DB
   await Led.deleteOne({ address });
