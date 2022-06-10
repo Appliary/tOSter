@@ -1,5 +1,6 @@
 #!/bin/bash
 
+export DBDIR="/boot/tOSter";
 export TMPDIR="/tmp/tOSter-install";
 export NODE_ARMV6L="https://unofficial-builds.nodejs.org/download/release/v18.3.0/node-v18.3.0-linux-armv6l.tar.xz";
 
@@ -70,7 +71,7 @@ npm i --omit=dev --no-audit || {
 echo "3️⃣  [1;4mConfiguring host[0m";
 
 echo "      ↳ Installing required packages";
-sudo apt-get install -y fbi;
+sudo apt-get install -y fbi libcap2-bin;
 
 echo "      ↳ Raspi config"
 sudo raspi-config nonint do_hostname tOSter   # Change hostname
@@ -95,9 +96,11 @@ echo "      ↳ Installing services";
 sudo cp ./services/* /lib/systemd/system;
 find ./services/* -type f -print0 | xargs -0 basename -a | xargs -n 1 sudo systemctl enable $@;
 
-echo "      ↳ Configuring services"
-export WHOAMI=$USER
+echo "      ↳ Configuring services";
 sudo sh -c "echo 'WorkingDirectory=$(pwd)'>>/lib/systemd/system/tOSter.service"
+
+echo "      ↳ Opening port 80 for node";
+sudo setcap cap_net_bind_service=+ep `readlink -f \`which node\``;
 
 # Reboot
 echo "5️⃣  [1;4mReboot[0m"

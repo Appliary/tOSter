@@ -2,6 +2,7 @@ import BasicAuth from 'basic-auth';
 import Chalk from 'chalk';
 
 import Logs from '#Utils/Logs';
+import Config from '#Models/Config';
 
 // Those are local adresses, who don't need authentication
 const LOCAL = [
@@ -9,7 +10,7 @@ const LOCAL = [
   '::1',
 ];
 
-export default function Auth(req, res, next) {
+export default async function Auth(req, res, next) {
   // Localhost, no pass required
   if (isLocal(req)) {
     Logs.silly('AUTH', Chalk.gray(`🔓 Local request from '${req.connection.remoteAddress}', no auth required`));
@@ -20,7 +21,7 @@ export default function Auth(req, res, next) {
   const creds = BasicAuth(req);
 
   // If creds OK
-  if (creds && check(creds.pass)) {
+  if (creds && await check(creds.pass)) {
     Logs.silly('AUTH', Chalk.green('🔐 Credentials OK'));
     return next();
   }
@@ -34,4 +35,9 @@ export default function Auth(req, res, next) {
 // Checking if it's local request
 function isLocal(req) {
   return LOCAL.includes(req.connection.remoteAddress);
+}
+
+async function check(pass) {
+  const conf = (await Config.findOne({ _id: "password" })) || '';
+  return pass == conf;
 }
