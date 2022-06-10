@@ -1,5 +1,5 @@
 [Unit]
-Description=Chromium kiosk
+Description=X Server
 Wants=multi-user.target
 After=multi-user.target
 
@@ -9,6 +9,5 @@ WantedBy=multi-user.target
 [Service]
 Environment=DISPLAY=:0
 Type=simple
-ExecStart=./resources/kiosk.sh
+ExecStart=startx
 Restart=always
-User=pi

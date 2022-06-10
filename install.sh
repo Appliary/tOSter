@@ -135,28 +135,33 @@ ensure_in_file "/boot/cmdline.txt" " logo.nologo"
 # Installing services
 echo "";
 echo "";
-echo "4️⃣  [1;4mConfiguring host[0m";
+echo "4️⃣  [1;4mInstalling services[0m";
 
 echo "";
-echo "      ↳ Setting user permissions";
+echo "      ↳ Granting permissions";
 sudo sh -c "gpasswd -a $USER tty";
+sudo touch "/etc/X11/Xwrapper.config"
+ensure_in_file "/etc/X11/Xwrapper.config" " logo.nologo"
+sudo setcap cap_net_bind_service=+ep `readlink -f \`which node\``;
+sudo chmod +x ./resources/kiosk.sh
 
 echo "";
-echo "      ↳ Installing services";
+echo "      ↳ Adding services files";
 sudo cp ./services/* /lib/systemd/system;
 
 echo "";
 echo "      ↳ Configuring services";
-find ./services/* -type f -print0 | xargs -0 basename -a | xargs -n 1 sudo sh -c "echo 'WorkingDirectory=$(pwd)'>>/lib/systemd/system/tOSter.service"
+for file in ./services/*; do
+  filename=`basename -a $file`;
+  ensure_in_file "/lib/systemd/system/$filename" "WorkingDirectory=$(pwd)" true;
+done
 
 echo "";
 echo "      ↳ Enabling services";
-find ./services/* -type f -print0 | xargs -0 basename -a | xargs -n 1 sudo systemctl enable $@;
-find ./services/* -type f -print0 | xargs -0 basename -a | xargs -n 1 sudo systemctl start $@;
-
-echo "";
-echo "      ↳ Opening port 80 for node";
-sudo setcap cap_net_bind_service=+ep `readlink -f \`which node\``;
+for file in ./services/*; do
+  filename=`basename -a $file`;
+  sudo systemctl enable $filename;
+done
 
 # Reboot
 echo "";
