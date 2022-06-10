@@ -19,9 +19,9 @@ export default async function IdentifyLed(req, res) {
 
   // Creating animation for the requested LED position
   const bitmap = {
-    r: Array(address),
-    g: Array(address),
-    b: Array(address),
+    r: Array(address).map(x=> ({ r: 1, g: 1, b: 1 })),
+    g: Array(address).map(x=> ({ r: 1, g: 1, b: 1 })),
+    b: Array(address).map(x=> ({ r: 1, g: 1, b: 1 })),
   };
   bitmap.r.push({ r:255, g:0, b: 0 });
   bitmap.g.push({ r:0, g:255, b: 0 });
