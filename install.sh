@@ -138,14 +138,16 @@ echo "";
 echo "4️⃣  [1;4mConfiguring host[0m";
 
 echo "";
+echo "      ↳ Setting user permissions";
+sudo sh -c "gpasswd -a $USER tty";
+
+echo "";
 echo "      ↳ Installing services";
 sudo cp ./services/* /lib/systemd/system;
-
 
 echo "";
 echo "      ↳ Configuring services";
 find ./services/* -type f -print0 | xargs -0 basename -a | xargs -n 1 sudo sh -c "echo 'WorkingDirectory=$(pwd)'>>/lib/systemd/system/tOSter.service"
-
 
 echo "";
 echo "      ↳ Enabling services";
