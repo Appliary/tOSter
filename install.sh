@@ -1,8 +1,11 @@
 #!/bin/bash
 
-export DBDIR="/boot/tOSter";
-export TMPDIR="/tmp/tOSter-install";
-export NODE_ARMV6L="https://unofficial-builds.nodejs.org/download/release/v18.3.0/node-v18.3.0-linux-armv6l.tar.xz";
+DBDIR="/boot/tOSter";
+TMPDIR="/tmp/tOSter-install";
+NODE_ARMV6L="https://unofficial-builds.nodejs.org/download/release/v18.3.0/node-v18.3.0-linux-armv6l.tar.xz";
+
+# Ensure to be in the install dir
+cd `dirname "$(readlink -f '$0')"`;
 
 # Welcome the user
 cat ./resources/logo.ansi;
@@ -31,11 +34,12 @@ if [[ -z `which node` ]]; then
     wget -q --show-progress $NODE_ARMV6L -O $TMPDIR/node.tar.xz;
 
     echo "      ↳ Unarchiving";
-    tar xvfJ $TMPDIR/node.tar.xz -C $TMPDIR | xargs -n 1 echo -ne "\\033[G\\033[K$@";
-    echo "\\033[G\\033[KDone"
+    tar xvfJ $TMPDIR/node.tar.xz -C $TMPDIR | xargs -n 1 echo -ne "\\033[K\\033[10G$@";
+   
 
     echo "      ↳ Copying";
-    sudo cp -R $TMPDIR/node-*/* /usr/local;
+    sudo rsync -av $TMPDIR/node-*/* /usr/local | xargs -n 1 echo -ne "\\033[K\\033[10G$@";
+    echo -e "\\033[2K\\033[10GDone"
 
     echo "      ↳ Cleaning";
     rm -rf $TMPDIR;
@@ -71,31 +75,30 @@ npm i --omit=dev --no-audit || {
 echo "3️⃣  [1;4mConfiguring host[0m";
 
 echo "      ↳ Installing required packages";
-sudo apt-get install -y fbi libcap2-bin unclutter;
+cat ./resources/packages.apt | xargs sudo apt-get install -y --no-install-recommends $@;
 
 echo "      ↳ Raspi config"
-sudo raspi-config nonint do_hostname tOSter   # Change hostname
 sudo raspi-config nonint do_spi 0             # Activate SPI
 sudo raspi-config nonint do_boot_behaviour B4 # Auto login
 
 echo "      ↳ Installing splashscreen"
-sudo cp ./resources/logo.png /etc/splash.png;
+sudo cp ./resources/logo.png /usr/share/plymouth/themes/pix/splash.png;
 sudo cp ./resources/logo.ansi /etc/motd;
 
 echo "      ↳ Setting /boot/config.txt"
 sudo sh -c "echo -n '
-disable_splash=1
-hdmi_drive=2
+max_usb_current=1
+hdmi_drive=1
+hdmi_group=2
+hdmi_mode=1
+hdmi_mode=87
+hdmi_cvt 800 480 60 6 0 0 0
 dtparam=spi=on
+disable_splash=1
 '>>/boot/config.txt";
 
 echo "      ↳ Setting /boot/cmdline.txt"
 sudo sh -c 'echo -n "console=tty3 quiet splash loglevel=3 logo.nologo vt.global_cursor_default=0 plymouth.enable=0">>/boot/cmdline.txt';
-
-echo "      ↳ Hide cursor"
-sudo sh -c 'echo "
-unclutter -idle 0
-">>/etc/xdg/lxsession/LXDE-pi/autostart';
 
 # Installing services
 echo "4️⃣  [1;4mConfiguring host[0m";
@@ -105,7 +108,7 @@ sudo cp ./services/* /lib/systemd/system;
 find ./services/* -type f -print0 | xargs -0 basename -a | xargs -n 1 sudo systemctl enable $@;
 
 echo "      ↳ Configuring services";
-sudo sh -c "echo 'WorkingDirectory=$(pwd)'>>/lib/systemd/system/tOSter.service"
+find ./services/* -type f -print0 | xargs -0 basename -a | xargs -n 1 sudo sh -c "echo 'WorkingDirectory=$(pwd)'>>/lib/systemd/system/tOSter.service"
 
 echo "      ↳ Opening port 80 for node";
 sudo setcap cap_net_bind_service=+ep `readlink -f \`which node\``;
