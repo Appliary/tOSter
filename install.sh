@@ -89,6 +89,9 @@ dtparam=spi=on'>>/boot/config.txt";
 echo "      ↳ Setting /boot/cmdline.txt"
 sudo sh -c 'echo -n "console=tty3 quiet splash loglevel=3 logo.nologo vt.global_cursor_default=0 plymouth.enable=0">>/boot/cmdline.txt';
 
+echo "      ↳ Hide cursor"
+sudo sh -c 'echo "xserver-command = X -nocursor">>/etc/lightdm/lightdm.conf';
+
 # Installing services
 echo "4️⃣  [1;4mConfiguring host[0m";
 
