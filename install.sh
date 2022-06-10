@@ -73,7 +73,7 @@ fi
 # Install dependencies
 echo "";
 echo "";
-echo "2️⃣  [1;4mInstalling node_modules[0m";
+echo "2️⃣  [1;4mInstalling required node_modules[0m";
 npm i --omit=dev --no-audit || {
   echo "❌  [31mModules installation failed, install on your own through `npm i`.[0m";
   exit 1;
@@ -86,7 +86,7 @@ echo "3️⃣  [1;4mConfiguring host[0m";
 
 echo "";
 echo "      ↳ Installing required apt packages";
-cat ./resources/packages.apt | xargs sudo apt-get install -y --no-install-recommends $@;
+cat ./resources/packages.apt | xargs sudo apt-get -q install -y --no-install-recommends $@;
 
 echo "";
 echo "      ↳ Raspi config";
