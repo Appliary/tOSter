@@ -9,7 +9,7 @@ WantedBy=graphical.target
 [Service]
 Environment=DISPLAY=:0
 Type=simple
-ExecStart=/usr/bin/xinit ./resources/kiosk.sh -- vt$(fgconsole)
+ExecStart=/usr/bin/xinit ./resources/kiosk.sh
 Restart=always
 User=pi
 Group=pi

@@ -94,8 +94,8 @@ echo "          - Activating SPI";
 sudo raspi-config nonint do_spi 0;
 
 echo "";
-echo "      ↳ Installing splashscreen";
-sudo cp ./resources/logo.png /usr/share/plymouth/themes/pix/splash.png;
+echo "      ↳ Installing splashscreens";
+sudo cp ./resources/logo.png /etc/splash.png;
 sudo cp ./resources/logo.ansi /etc/motd;
 
 function ensure_in_file {
@@ -140,11 +140,17 @@ echo "4️⃣  [1;4mConfiguring host[0m";
 echo "";
 echo "      ↳ Installing services";
 sudo cp ./services/* /lib/systemd/system;
-find ./services/* -type f -print0 | xargs -0 basename -a | xargs -n 1 sudo systemctl enable $@;
+
 
 echo "";
 echo "      ↳ Configuring services";
 find ./services/* -type f -print0 | xargs -0 basename -a | xargs -n 1 sudo sh -c "echo 'WorkingDirectory=$(pwd)'>>/lib/systemd/system/tOSter.service"
+
+
+echo "";
+echo "      ↳ Enabling services";
+find ./services/* -type f -print0 | xargs -0 basename -a | xargs -n 1 sudo systemctl enable $@;
+find ./services/* -type f -print0 | xargs -0 basename -a | xargs -n 1 sudo systemctl start $@;
 
 echo "";
 echo "      ↳ Opening port 80 for node";
