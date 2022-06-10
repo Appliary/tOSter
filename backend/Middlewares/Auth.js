@@ -47,7 +47,7 @@ async function check(pass) {
   const conf = await Config.findOne({ _id: "password" });
   Logs.silly('AUTH', 'Checking password', JSON.stringify({
     input: pass,
-    correct: conf.value,
+    correct: conf,
   }));
   return pass == conf.value;
 }
