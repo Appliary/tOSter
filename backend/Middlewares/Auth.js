@@ -26,7 +26,7 @@ export default async function Auth(req, res, next) {
       Logs.silly('AUTH', Chalk.green('🔐 Credentials OK'));
       return next();
     } else {
-      Logs.warn('AUTH', Chalk.red(`🗝  Wrong key`));
+      Logs.warn('AUTH', Chalk.red(`🗝  Wrong key from '${req.connection.remoteAddress}'`));
       res.set('WWW-Authenticate', 'Basic realm="tOSter"');
       return res.status(401).send("🙅🏻 Wrong key");
     }
@@ -49,5 +49,5 @@ async function check(pass) {
     input: pass,
     correct: conf,
   }));
-  return pass == conf.value;
+  return (pass == (conf.value || ''));
 }

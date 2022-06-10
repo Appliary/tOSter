@@ -3,6 +3,7 @@ import Chalk from 'chalk';
 
 import Logo from '#Utils/Logo';
 import Logs from '#Utils/Logs';
+import Draw from '#Utils/Draw';
 import { DBConnect } from '#Utils/DB';
 import Package from './Utils/package.cjs';
 
@@ -22,6 +23,7 @@ import('./routes.js');
 process
   .on('SIGINT', () => {
     Logs.info('BOOT', `❎ ${Chalk.bold('SIGINT:')} Shutting down ${TOSTER}\n\n\n`);
+    Draw();
     process.exit(0);
   })
   .on('uncaughtException', (e) => {
