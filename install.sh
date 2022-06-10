@@ -1,6 +1,7 @@
 #!/bin/bash
 
-NODE_ARMV6L="https://unofficial-builds.nodejs.org/download/release/v18.3.0/node-v18.3.0-linux-armv6l.tar.xz"
+export TMPDIR = "/tmp/tOSter-install";
+export NODE_ARMV6L="https://unofficial-builds.nodejs.org/download/release/v18.3.0/node-v18.3.0-linux-armv6l.tar.xz";
 
 # Welcome the user
 cat ./resources/logo.ansi
@@ -17,24 +18,26 @@ echo ""
 # Install NodeJS
 echo "1️⃣  [1;4mInstalling NodeJS[0m"
 echo ""
-type node >/dev/null 2>&1 && {
+[[ -z `which node` ]] && {
   echo "    [93mNodeJS is not installed.[0m"
 
   # Check for Raspberry or other
   [[ $(uname -m) = "armv6l" ]] && {
-    mkdir -p $TMPDIR/tOSter-install
+    echo "✅  [32mNode $(node -v) already installed[0m"
+  } || {
+    mkdir -p /tmp/tOSter-install
 
     echo "      ↳ Retrieving Raspberry unofficial builds : [2m$NODE_ARMV6L[0m"
-    wget $NODE_ARMV6L $TMPDIR/tOSter-install/node.tar.xz;
+    wget $NODE_ARMV6L $TMPDIR/node.tar.xz;
 
     echo "      ↳ Unarchiving"
-    tar xvfJ $TMPDIR/tOSter-install/node-* $TMPDIR/tOSter-install/
+    tar xvfJ $TMPDIR/node-* $TMPDIR
 
     echo "      ↳ Copying"
-    sudo cp -R $TMPDIR/tOSter-install/node-*/* /usr/local
+    sudo cp -R $TMPDIR/node-*/* /usr/local
 
     echo "      ↳ Cleaning"
-    rm -rf $TMPDIR/tOSter-install;
+    rm -rf $TMPDIR;
   } || {
     echo "      ↳ Installing NVM"
     wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
@@ -49,20 +52,18 @@ type node >/dev/null 2>&1 && {
   PATH=$PATH:/usr/local/bin
 
   # Check if installed
-  type node >/dev/null 2>&1 || {
-    echo "❌  [31mInstallation failed[0m"
+  [[ -z `which node` ]] || {
+    echo "❌  [31mInstallation failed. Please install on your own.[0m"
     exit 1;
   }
 
   echo "✅  [32mNode $(node -v) has been installed[0m"
-} || {
-  echo "✅  [32mNode $(node -v) already installed[0m"
 }
 
 # Install dependencies
 echo "2️⃣  [1;4mInstalling Dependencies[0m"
 npm i --production --no-audit || {
-  echo "❌  [31mInstallation failed[0m"
+  echo "❌  [31mDependencies installation failed, install on your own through NPM.[0m"
   exit 1
 }
 
