@@ -5,9 +5,7 @@ import FS from 'fs';
 
 import Logs from '#Utils/Logs';
 
-export const DB_URI = FS.existsSync('/boot')
-  ? 'nedb:///boot/tOSter.db'
-  : `nedb://${OS.homedir()}/.tOSter.db`;
+export const DB_URI = `nedb://${OS.homedir()}/.tOSter`;
 
 export function DBConnect () {
   try {

@@ -71,7 +71,7 @@ npm i --omit=dev --no-audit || {
 echo "3️⃣  [1;4mConfiguring host[0m";
 
 echo "      ↳ Installing required packages";
-sudo apt-get install -y fbi libcap2-bin;
+sudo apt-get install -y fbi libcap2-bin unclutter;
 
 echo "      ↳ Raspi config"
 sudo raspi-config nonint do_hostname tOSter   # Change hostname
@@ -83,14 +83,19 @@ sudo cp ./resources/logo.png /etc/splash.png;
 sudo cp ./resources/logo.ansi /etc/motd;
 
 echo "      ↳ Setting /boot/config.txt"
-sudo sh -c "echo 'disable_splash=1
-dtparam=spi=on'>>/boot/config.txt";
+sudo sh -c "echo -n '
+disable_splash=1
+hdmi_drive=2
+dtparam=spi=on
+'>>/boot/config.txt";
 
 echo "      ↳ Setting /boot/cmdline.txt"
 sudo sh -c 'echo -n "console=tty3 quiet splash loglevel=3 logo.nologo vt.global_cursor_default=0 plymouth.enable=0">>/boot/cmdline.txt';
 
 echo "      ↳ Hide cursor"
-sudo sh -c 'echo "xserver-command = X -nocursor">>/etc/lightdm/lightdm.conf';
+sudo sh -c 'echo "
+unclutter -idle 0
+">>/etc/xdg/lxsession/LXDE-pi/autostart';
 
 # Installing services
 echo "4️⃣  [1;4mConfiguring host[0m";
