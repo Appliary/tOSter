@@ -7,10 +7,10 @@ After=graphical.target
 WantedBy=graphical.target
 
 [Service]
-Environment=DISPLaY=:0
+Environment=DISPLAY=:0
 Environment=XAUTHORITY=/home/pi/.XAUTHORITYType=simple
 Type=simple
-ExecStart=/usr/bun/chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost
+ExecStart=/usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk http://localhost
 Restart=always
 User=pi
 Group=pi

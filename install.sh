@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export TMPDIR = "/tmp/tOSter-install";
+export TMPDIR="/tmp/tOSter-install";
 export NODE_ARMV6L="https://unofficial-builds.nodejs.org/download/release/v18.3.0/node-v18.3.0-linux-armv6l.tar.xz";
 
 # Welcome the user
@@ -27,10 +27,11 @@ if [[ -z `which node` ]]; then
     mkdir -p /tmp/tOSter-install;
 
     echo "      ↳ Retrieving Raspberry unofficial builds : [2m$NODE_ARMV6L[0m";
-    wget $NODE_ARMV6L $TMPDIR/node.tar.xz;
+    wget -q --show-progress $NODE_ARMV6L -O $TMPDIR/node.tar.xz;
 
     echo "      ↳ Unarchiving";
-    tar xvfJ $TMPDIR/node-* $TMPDIR;
+    tar xvfJ $TMPDIR/node.tar.xz -C $TMPDIR | xargs -n 1 echo -ne "\\033[G\\033[K$@";
+    echo "\\033[G\\033[KDone"
 
     echo "      ↳ Copying";
     sudo cp -R $TMPDIR/node-*/* /usr/local;
@@ -47,14 +48,11 @@ if [[ -z `which node` ]]; then
     $NVM_DIR/nvm.sh use stable;
   fi
 
-  # Ensure path
-  PATH=$PATH:/usr/local/bin;
-
   # Check if installed
-  [[ -z `which node` ]] || {
+  if [[ -z `which node` ]]; then
     echo "❌  [31mInstallation failed. Please install on your own.[0m";
     exit 1;
-  }
+  fi
 
   echo "✅  [32mNode $(node -v) has been installed[0m";
 else
@@ -63,7 +61,7 @@ fi
 
 # Install dependencies
 echo "2️⃣  [1;4mInstalling Dependencies[0m";
-npm i --production --no-audit || {
+npm i --omit=dev --no-audit || {
   echo "❌  [31mDependencies installation failed, install on your own through NPM.[0m";
   exit 1;
 }
@@ -80,21 +78,22 @@ sudo raspi-config nonint do_spi 0             # Activate SPI
 sudo raspi-config nonint do_boot_behaviour B4 # Auto login
 
 echo "      ↳ Installing splashscreen"
-sudo cp ./resources/logo.png /etc/splash.png
+sudo cp ./resources/logo.png /etc/splash.png;
+sudo cp ./resources/logo.ansi /etc/motd;
 
 echo "      ↳ Setting /boot/config.txt"
 sudo sh -c "echo 'disable_splash=1
-dtparam=spi=on'>>/boot/config.txt"
+dtparam=spi=on'>>/boot/config.txt";
 
 echo "      ↳ Setting /boot/cmdline.txt"
-sudo sh -c 'echo -n "console=tty3 quiet splash loglevel=3 logo.nologo vt.global_cursor_default=0 plymouth.enable=0">>/boot/cmdline.txt'
+sudo sh -c 'echo -n "console=tty3 quiet splash loglevel=3 logo.nologo vt.global_cursor_default=0 plymouth.enable=0">>/boot/cmdline.txt';
 
 # Installing services
-echo "4️⃣  [1;4mConfiguring host[0m"
+echo "4️⃣  [1;4mConfiguring host[0m";
 
-echo "      ↳ Installing services"
-sudo cp ./services/* /lib/systemd/system
-find ./services/* -type f -print0 | xargs -0 basename -a | xargs -0 sudo systemctl enable
+echo "      ↳ Installing services";
+sudo cp ./services/* /lib/systemd/system;
+find ./services/* -type f -print0 | xargs -0 basename -a | xargs -n 1 sudo systemctl enable $@;
 
 echo "      ↳ Configuring services"
 export WHOAMI=$USER
