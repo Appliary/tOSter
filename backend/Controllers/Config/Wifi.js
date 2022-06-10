@@ -29,6 +29,7 @@ try {
   Logs.debug('WIFI', `📄 Loaded WPA Supplicant config file with ${Chalk.yellow.bold(WPA.listwpa.length)} entries`);
 } catch(e) {
   Logs.error('WIFI', '📄 Error loading WPA Supplicant config file, simulating');
+  Logs.error('WIFI', e.stack);
 }
 
 // list wifi settings

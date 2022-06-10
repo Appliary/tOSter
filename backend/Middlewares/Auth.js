@@ -45,6 +45,6 @@ function isLocal(req) {
 
 async function check(pass) {
   const conf = (await Config.findOne({ _id: "password" })) || { value: '' };
-  Logs.silly('AUTH', 'Checking password', pass, conf.value);
+  Logs.silly('AUTH', 'Checking password', JSON.stringify(pass), JSON.stringify(conf.value));
   return pass == conf;
 }
