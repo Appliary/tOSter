@@ -113,7 +113,7 @@ disable_splash=1
 
 echo ""
 echo "      ↳ Setting /boot/cmdline.txt"
-sudo sh -c 'echo -n "console=tty3 quiet splash loglevel=3 logo.nologo vt.global_cursor_default=0 plymouth.enable=0">>/boot/cmdline.txt';
+sudo sh -c 'echo -n " console=tty3 quiet splash loglevel=3 logo.nologo">>/boot/cmdline.txt';
 
 # Installing services
 echo ""

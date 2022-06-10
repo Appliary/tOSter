@@ -46,6 +46,8 @@ cd tOSter
 
 This code is a property of Appliary. You are authorized to use it freely for personal or learning projects.
 
+This code is given as-it-is, and you do any of the manipulations at your own risks.
+
 ### 6b) Edits
 
 Edits are authorized by leaving at least a reference to this original project, but i hope you will contribute to the original by suggesting your changes.
