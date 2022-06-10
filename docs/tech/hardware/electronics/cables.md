@@ -2,4 +2,6 @@
 
 # 🪢  Cables and wires
 
-`// TODO`
+- JST-XH-3 connectors
+  - 3 males
+  - 3 females
