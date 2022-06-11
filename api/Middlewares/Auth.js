@@ -7,6 +7,7 @@ import Config from '#Models/Config';
 // Those are local adresses, who don't need authentication
 const LOCAL = [
   '127.0.0.1',
+  '::ffff:127.0.0.1',
   '::1',
 ];
 
