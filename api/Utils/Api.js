@@ -14,7 +14,7 @@ const Server = Express();
 Server.use(BodyParser.urlencoded({ extended: false }));
 Server.use(PoweredBy);
 Server.use(Auth);
-Server.use(Express.static('frontend/build'));
+Server.use(Express.static('client/build'));
 
 // Registering routes
 function Route(method) {
