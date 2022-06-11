@@ -10,5 +10,5 @@ WantedBy=multi-user.target
 Environment=DISPLAY=:0
 Environment=XAUTHORITY=/home/pi/.Xauthority
 Type=simple
-ExecStart=./resources/kiosk.sh
+ExecStart=/bin/bash ./resources/kiosk.sh
 Restart=always

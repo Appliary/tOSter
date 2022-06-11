@@ -103,9 +103,9 @@ function ensure_in_file {
     echo "          - [[90mALREADY SET[0m] $2";
   else
     if [[ -z $3 ]]; then
-      sudo sh -c "echo -ne '$2'>>$1";
+      sudo sh -c "echo \"$2\">>$1";
     else
-      sudo sh -c "echo '$2'>>$1";
+      sudo sh -c "echo -ne \"$2\">>$1";
     fi
     echo "          - [[32m   ADDED   [0m] $2";
   fi
@@ -114,23 +114,23 @@ function ensure_in_file {
 echo "";
 echo "      ↳ Setting /boot/config.txt";
 
-ensure_in_file "/boot/config.txt" "max_usb_current=1" true
-ensure_in_file "/boot/config.txt" "hdmi_drive=1" true
-ensure_in_file "/boot/config.txt" "hdmi_group=2" true
-ensure_in_file "/boot/config.txt" "hdmi_mode=1" true
-ensure_in_file "/boot/config.txt" "hdmi_mode=87" true
-ensure_in_file "/boot/config.txt" "hdmi_cvt 800 480 60 6 0 0 0" true
-ensure_in_file "/boot/config.txt" "dtparam=spi=on" true
-ensure_in_file "/boot/config.txt" "disable_splash=1" true
+ensure_in_file "/boot/config.txt" "max_usb_current=1";
+ensure_in_file "/boot/config.txt" "hdmi_drive=1";
+ensure_in_file "/boot/config.txt" "hdmi_group=2";
+ensure_in_file "/boot/config.txt" "hdmi_mode=1";
+ensure_in_file "/boot/config.txt" "hdmi_mode=87";
+ensure_in_file "/boot/config.txt" "hdmi_cvt 800 480 60 6 0 0 0";
+ensure_in_file "/boot/config.txt" "dtparam=spi=on";
+ensure_in_file "/boot/config.txt" "disable_splash=1";
 
 echo "";
 echo "      ↳ Setting /boot/cmdline.txt"
 
-ensure_in_file "/boot/cmdline.txt" " console=tty3"
-ensure_in_file "/boot/cmdline.txt" " quiet"
-ensure_in_file "/boot/cmdline.txt" " splash"
-ensure_in_file "/boot/cmdline.txt" " loglevel=3"
-ensure_in_file "/boot/cmdline.txt" " logo.nologo"
+ensure_in_file "/boot/cmdline.txt" " console=tty3" true;
+ensure_in_file "/boot/cmdline.txt" " quiet" true;
+ensure_in_file "/boot/cmdline.txt" " splash" true;
+ensure_in_file "/boot/cmdline.txt" " loglevel=3" true;
+ensure_in_file "/boot/cmdline.txt" " logo.nologo" true;
 
 # Installing services
 echo "";
@@ -141,7 +141,7 @@ echo "";
 echo "      ↳ Granting permissions";
 sudo sh -c "gpasswd -a $USER tty";
 sudo touch "/etc/X11/Xwrapper.config"
-ensure_in_file "/etc/X11/Xwrapper.config" "allowed_users=anybody" true
+ensure_in_file "/etc/X11/Xwrapper.config" "allowed_users=anybody";
 sudo setcap cap_net_bind_service=+ep `readlink -f \`which node\``;
 sudo chmod +x ./resources/kiosk.sh
 
@@ -153,7 +153,7 @@ echo "";
 echo "      ↳ Configuring services";
 for file in ./services/*; do
   filename=`basename -a $file`;
-  ensure_in_file "/lib/systemd/system/$filename" "WorkingDirectory=$(pwd)" true;
+  ensure_in_file "/lib/systemd/system/$filename" "WorkingDirectory=$(pwd)";
 done
 
 echo "";

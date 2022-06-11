@@ -12,4 +12,4 @@ matchbox-window-manager -use_titlebar no &
 unclutter &
 
 # start chromium
-chromium-browser --display=:0 --kiosk --incognito --window-position=0,0 https://localhost
+chromium-browser --display=:0 --no-sandbox --kiosk --incognito --window-position=0,0 https://localhost
