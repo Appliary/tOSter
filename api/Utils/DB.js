@@ -1,11 +1,9 @@
 import Chalk from 'chalk';
 import Camo from 'camo';
-import OS from 'os';
-import FS from 'fs';
 
 import Logs from '#Utils/Logs';
 
-export const DB_URI = `nedb://${OS.homedir()}/.tOSter`;
+export const DB_URI = `nedb://${process.cwd()}/nedb`;
 
 export function DBConnect () {
   try {
@@ -27,14 +25,18 @@ export function Init(model, doc) {
     // Abort if we have already in DB
     if (await model.count({ _id: doc._id })) return;
 
+    // Create new item
+    const elem = model.create(doc);
+
     // Exec func
     Object.keys(doc)
       .forEach(prop => {
-        if (typeof doc[prop] === 'function') doc[prop] = doc[prop]();
+        if (typeof doc[prop] === 'function') elem[prop] = doc[prop]();
+        else elem[prop] = doc[prop];
       });
 
-    // Save
-    model.create(doc).save();
+    // Save to DB
+    elem.save();
 
     // Log
     Logs.verbose('CONF', `Initialized ${Chalk.blue(model.collectionName())} to ${Chalk.grey.italic(JSON.stringify(doc))}`);

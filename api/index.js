@@ -4,13 +4,17 @@ import Chalk from 'chalk';
 import Logo from '#Utils/Logo';
 import Logs from '#Utils/Logs';
 import { DBConnect } from '#Utils/DB';
+import EnsureCWD from '#Utils/EnsureCWD';
 import Package from './Utils/package.cjs';
 
 const TOSTER = `${Chalk.bold.whiteBright('t')}${Chalk.bold.blueBright('OS')}${Chalk.bold.whiteBright('ter')}`;
 
+// Ensure being in the project dir
+EnsureCWD();
+
 // First prints
 Logo();
-Logs.info('BOOT', `✅ Started ${TOSTER} ${Chalk.underline.green(`v${Package.version}`)}`);
+Logs.info('BOOT', `✅ Starting ${TOSTER} ${Chalk.underline.green(`v${Package.version}`)}`);
 
 // Connect to database
 DBConnect();

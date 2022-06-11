@@ -105,7 +105,7 @@ function ensure_in_file {
     if [[ -z $3 ]]; then
       sudo sh -c "echo -ne '$2'>>$1";
     else
-      sudo sh -c "echo -e '$2'>>$1";
+      sudo sh -c "echo '$2'>>$1";
     fi
     echo "          - [[32m   ADDED   [0m] $2";
   fi
@@ -141,7 +141,7 @@ echo "";
 echo "      ↳ Granting permissions";
 sudo sh -c "gpasswd -a $USER tty";
 sudo touch "/etc/X11/Xwrapper.config"
-ensure_in_file "/etc/X11/Xwrapper.config" " logo.nologo"
+ensure_in_file "/etc/X11/Xwrapper.config" "allowed_users=anybody" true
 sudo setcap cap_net_bind_service=+ep `readlink -f \`which node\``;
 sudo chmod +x ./resources/kiosk.sh
 

@@ -7,7 +7,7 @@ import {
 Any('/api/*', 'NotFound');
 
 // Serve frontend
-Get('/*', 'ServeFrontend');
+Get('/*', 'ServeClient');
 
 // Finally, not found
 Any('/*', 'NotFound');

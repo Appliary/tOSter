@@ -60,7 +60,7 @@ function log(method, level, context, messages) {
   if (!LVL.includes(level)) return console.error(`Unknown log level: ${level}`);
   if (LVL.indexOf(level)>logLevel) return;
 
-  const ctxt = Chalk.inverse(`[${context.slice(0,5).toUpperCase().padEnd(5)}]`);
+  const ctxt = Chalk.inverse(`[${context.slice(0,6).toUpperCase().padEnd(6)}]`);
   const lvl = Chalk[LEVELS[level]](level.slice(0,5).padStart(5));
   console[method](ctxt, lvl, '│', messages.join(' '));
 }

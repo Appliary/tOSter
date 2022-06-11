@@ -6,13 +6,14 @@
   "author": "MicCarr <miccarr@me.com>",
   "license": "copyright",
   "scripts": {
-    "start": "nodemon backend/index.js",
+    "start": "nodemon api/index.js",
     "debug": "LOGLEVEL=silly npm start",
     "deploy": "node scripts/deploy.js",
-    "prod": "node backend/index.js",
-    "front": "cd frontend;npm i && npm start;cd ..",
-    "front:build": "cd frontend;npm i && npm run build;cd ..",
-    "front:test": "cd frontend;npm i && npm run test;cd .."
+    "prod": "node api/index.js",
+    "prod:debug": "LOGLEVEL=silly npm run prod",
+    "client": "cd client;npm i && npm start;cd ..",
+    "client:build": "cd client;npm i && npm run build;cd ..",
+    "client:test": "cd client;npm i && npm run test;cd .."
   },
   "dependencies": {
     "basic-auth": "2.0.1",
@@ -33,14 +34,14 @@
     "quiet": true,
     "ext": "js, cjs, mjs, json",
     "watch": [
-      "backend/"
+      "api/"
     ]
   },
   "imports": {
-    "#Middlewares/*": "./backend/Middlewares/*.js",
-    "#Models/*": "./backend/Models/*.js",
-    "#Controllers/*": "./backend/Controllers/*.js",
-    "#Routes/*": "./backend/Routes/*.js",
-    "#Utils/*": "./backend/Utils/*.js"
+    "#Middlewares/*": "./api/Middlewares/*.js",
+    "#Models/*": "./api/Models/*.js",
+    "#Controllers/*": "./api/Controllers/*.js",
+    "#Routes/*": "./api/Routes/*.js",
+    "#Utils/*": "./api/Utils/*.js"
   }
 }
