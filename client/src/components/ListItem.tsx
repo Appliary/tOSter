@@ -6,6 +6,9 @@ const ListItem = (props: any) => {
   if (props.to) {
     return (
       <Link className={Styles.link} to={props.to}>
+        <span className={Styles.icon}>
+          { props.icon ? <img src={`/icons/${props.icon}.png`} alt="" /> : '' }
+        </span>
         <span>{props.children}</span>
         <span className={Styles.sub}>
           {props.sub}
@@ -15,8 +18,23 @@ const ListItem = (props: any) => {
     );
   }
 
+  if (props.onClick) {
+    return (
+      <div className={Styles.link} onClick={props.onClick}>
+        <span className={Styles.icon}>
+          { props.icon ? <img src={`/icons/${props.icon}.png`} alt="" /> : '' }
+        </span>
+        <span>{props.children}</span>
+        <span className={Styles.sub}>{props.sub}</span>
+      </div>
+    );
+  }
+
   return (
     <div className={Styles.line}>
+      <span className={Styles.icon}>
+        { props.icon ? <img src={`/icons/${props.icon}.png`} alt="" /> : '' }
+      </span>
       <span>{props.children}</span>
       <span className={Styles.sub}>{props.sub}</span>
     </div>

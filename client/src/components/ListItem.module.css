@@ -13,23 +13,47 @@
 }
 
 .line > span, .link > span {
-  flex: 1;
-  max-width: 50%;
+  flex-basis: fit-content;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  flex-grow: 1;
 }
 
-.sub {
-  flex: 0;
-  opacity: 0.5;
+span.sub {
+  min-width: 32px;
+  max-width: 50%;
   text-align: right;
+  opacity: 0.5;
 }
 
-.line:last-child {
+span.icon {
+  width: 30px;
+  max-width: 32px;
+}
+
+.icon img {
+  height: 20px;
+  float: left;
+}
+
+.line:last-child, .link:last-child {
   border-bottom: 0px;
+}
+
+.link, .link * {
+  cursor: pointer;
 }
 
 .link:hover {
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+.spacer {
+  display: block;
+  height: 0;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  border-bottom: 5px solid rgba(255,255,255,0.2);
 }

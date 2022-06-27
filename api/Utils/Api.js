@@ -1,5 +1,6 @@
 import Express from 'express';
 import BodyParser from 'body-parser';
+import Cors from 'cors';
 import Chalk from 'chalk';
 
 import Auth from '#Middlewares/Auth';
@@ -12,6 +13,7 @@ const Server = Express();
 
 // Registering plugins
 Server.use(BodyParser.urlencoded({ extended: false }));
+Server.use(Cors());
 Server.use(PoweredBy);
 Server.use(Auth);
 Server.use(Express.static('client/build'));

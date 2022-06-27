@@ -12,9 +12,23 @@
   padding-bottom: 20px;
 }
 
-.grid img {
-  width: 100px;
+.card {
+  width: 110px;
   margin: 20px 10px 0;
   border: 3px solid white;
   border-radius: 3px;
+  text-align: center;
+}
+
+.card table {
+  margin: 5px;
+}
+
+.card span {
+  display: block;
+  width: 100%;
+  background-color: white;
+  color: black;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

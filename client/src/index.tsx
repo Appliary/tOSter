@@ -1,4 +1,5 @@
 import React from 'react';
+import Axios from 'axios';
 import ReactDOM from 'react-dom/client';
 
 import './localisation';
@@ -6,6 +7,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import './index.css';
+
+if (window.location.port === '3000') {
+  Axios.defaults.baseURL = 'http://localhost:80';
+}
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

@@ -10,12 +10,18 @@ const Topnav = (props: any) => {
     return (
       <div className={Styles.topnav}>
         <Button to="/apps" active={props.active==='apps'}>
-          <Trans>Games</Trans>
+          <Trans>Applications</Trans>
         </Button>
         <Button to="/settings" active={props.active==='settings'}>
           <Trans>Settings</Trans>
         </Button>
-        <Button to="/alarms" active={props.active==='clock'} right>
+        <Button to="/settings/fan" active={props.active==='fan'} right>
+          Fan
+        </Button>
+        <Button to="/settings/brightness" active={props.active==='brightness'}>
+          Bri
+        </Button>
+        <Button to="/apps/alarms" active={props.active==='clock'}>
           <Clock />
         </Button>
       </div>

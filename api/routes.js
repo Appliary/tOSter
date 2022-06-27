@@ -1,7 +1,10 @@
 import('#Routes/Admin');
 import('#Routes/Apps');
 import('#Routes/Config');
+
 import('#Routes/Leds');
+import('#Routes/Faces');
+
 import('#Routes/Preview');
 
 // Must be the last one

@@ -1,38 +1,47 @@
 import { Trans } from "react-i18next";
+import { Component } from "react";
+import Axios from "axios";
+
 import ListItem from "../../components/ListItem";
 import Scrollable from "../../components/Scrollable";
 import Topnav, { Button } from "../../components/Topnav";
 
-const FacesList = () => {
-  return (
-    <div>
-      <Topnav>
-        <Button to="/settings">
-          <img src="/icons/left.png" alt="" />
-          <Trans>Back</Trans>
-        </Button>
-      </Topnav>
-      <Scrollable>
-        <ListItem sub={<Actions first />}>
-          <img src="/dummyFace.png" alt="" height="20" />
-          UwU face
-        </ListItem>
-        <ListItem sub={<Actions />}>
-          <img src="/dummyFace.png" alt="" height="20" />
-          OwO face
-        </ListItem>
-        <ListItem sub={<Actions />}>
-          <img src="/dummyFace.png" alt="" height="20" />
-          404 Not found
-        </ListItem>
-        <ListItem sub={<Actions last />}>
-          <img src="/dummyFace.png" alt="" height="20" />
-          418 I'm a toaster
-        </ListItem>
-      </Scrollable>
-    </div>
-  );
-};
+export default class FacesList extends Component {
+  state : any = {
+    faces: [],
+  };
+
+  render() {
+    return (
+      <div>
+        <Topnav>
+          <Button to="/settings">
+            <img src="/icons/left.png" alt="" />
+            <Trans>Back</Trans>
+          </Button>
+        </Topnav>
+        <Scrollable>
+          {
+            this.state
+              .faces
+              .sort((a: any, b: any)=> a.pos > b.pos ? 1 : -1)
+              .map((face: any) => (
+                <ListItem sub={<Actions first={face.pos===0} />}>
+                  <img src="/dummyFace.png" alt="" height="20" />
+                  { face.name }
+                </ListItem>
+              ))
+          }
+        </Scrollable>
+      </div>
+    );
+  }
+
+  async componentDidMount() {
+    const { data: faces } = await Axios.get('/api/Faces');
+    this.setState({ faces });
+  }
+}
 
 const Actions = (props: any) => {
   return (
@@ -43,5 +52,3 @@ const Actions = (props: any) => {
     </div>
   );
 }
-
-export default FacesList;

@@ -1,3 +1,46 @@
-Menu: Menu
+currentLang: English
+
+# Languages
+en: English
+fr: Français (French)
+nl: Nederlands (Dutch)
+de: Deutsh (German)
+it: Italiano (Italian)
+es: Español (Spanish)
+jp: 日本語 (Japanese)
+cn: 中文 (Chinese)
+
+# Top menu
 Back: Back
+Applications: Applications
+Settings: Settings
+
+# Settings
+manageFaces: Manage Expressions
+manageLeds: Manage Leds
+wifi: Wi-Fi connections
+bluetooth: Bluetooth connections
+remoteAccess: Remote access
+language: Language
+timezone: Time zone
+about: About tOSter
+update: System version
+shutdown: Shutdown
+
+# Apps
+Alarms: Alarms
+AlarmsSub: Set reminders
+Simon: Simon
+SimonSub: Memory game about colors
+Rainbow: Rainbow
+RainbowSub: Become a beacon
+Clear: Clear
+ClearSub: Turn off all the LEDs
+Identify: Identify
+IdentifySub: Test and identify a LED
+
+# Alarms
+Set alarm: Set alarm
+
+# Errors
 Error404: It looks like you are lost !

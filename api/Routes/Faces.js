@@ -5,7 +5,8 @@ import {
   Delete,
 } from '#Utils/Api';
 
-Get('/api/Faces', 'WIP');
+Get('/api/Faces', 'Faces/List');
+Get('/api/Faces/count', 'Faces/count');
 Get('/api/Faces/:id', 'WIP');
 Post('/api/Faces', 'Faces/Add');
 Put('/api/Faces/:id', 'WIP');

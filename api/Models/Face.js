@@ -59,5 +59,16 @@ export default class Face extends Document {
       type: [Frame],
       required: true,
     }
+
+    this.icon = {
+      type: Frame,
+      required: true,
+    }
+
+    this.pos = {
+      type: Number,
+      required: true,
+      unique: true,
+    }
   }
 }

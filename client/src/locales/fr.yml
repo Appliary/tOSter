@@ -1,0 +1,47 @@
+currentLang: Français
+
+# Languages
+en: English (Anglais)
+fr: Français 🥖
+nl: Nederlands (Dutch)
+de: Deutsh (German)
+it: Italiano (Italian)
+es: Español (Spanish)
+jp: 日本語 (Japanese)
+cn: 中文 (Chinese)
+
+# Top menu
+Back: Retour
+Applications: Applications
+Settings: Paramètres
+
+# Settings
+manageFaces: Gérer les expressions
+manageLeds: Gérer les LEDs
+wifi: Connexions WIFI
+bluetooth: Connections Bluetooth
+remoteAccess: Accès à distance
+language: Langue
+timezone: Fuseau horaire
+about: A propos de tOSter
+update: Version système
+shutdown: Éteindre
+
+# Apps
+Alarms: Alarmes
+AlarmsSub: Définir des rappels
+Simon: Simon
+SimonSub: Jeu de mémoire coloré
+Rainbow: Arc-en-ciel
+RainbowSub: Deviens un phare multicolore
+Clear: Sans-visage
+ClearSub: Éteindre toutes les LEDs
+Identify: Identifier
+IdentifySub: Tester et identifier une LED
+
+
+# Alarms
+Set alarm: Définir une alarme
+
+# Errors
+Error404: On dirait que tu t'es perdu !

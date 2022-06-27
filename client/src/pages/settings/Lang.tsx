@@ -4,9 +4,13 @@ import Topnav, { Button } from '../../components/Topnav';
 import Scrollable from '../../components/Scrollable';
 import ListItem from '../../components/ListItem';
 
-import Styles from './SettingsMenu.module.css';
+import { languages } from '../../localisation';
+
+import Styles from '../Menu.module.css';
 
 const SettingsMenu = () => {
+  const current = window.localStorage.getItem('lang') || 'en';
+
   return <div className={Styles.menu}>
     <Topnav>
       <Button to="/settings">
@@ -15,11 +19,19 @@ const SettingsMenu = () => {
       </Button>
     </Topnav>
     <Scrollable>
-      <ListItem sub="✅">English</ListItem>
-      <ListItem>Baguette</ListItem>
-      <ListItem>日本語</ListItem>
+      {
+        languages.map(lang => (
+          <ListItem icon={lang===current ? "check" : null} onClick={()=>setLang(lang)}><Trans>{lang}</Trans></ListItem>
+        ))
+      }
     </Scrollable>
   </div>;
+
 };
+
+function setLang(lang: string) {
+  window.localStorage.setItem('lang', lang);
+  window.location.reload();
+}
 
 export default SettingsMenu;
