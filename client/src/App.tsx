@@ -8,6 +8,8 @@ import AppsMenu from './pages/AppsMenu';
 import AlarmMenu from './pages/apps/Alarm';
 import SettingsMenu from './pages/SettingsMenu';
 import SettingsLang from './pages/settings/Lang';
+import SettingsUpdate from './pages/settings/Update';
+import SettingsShutdown from './pages/settings/Shutdown';
 import NotFound from './pages/NotFound';
 import FacesEdit from './pages/faces/FacesEdit';
 import FacesList from './pages/faces/FacesList';
@@ -24,6 +26,8 @@ function App() {
           <Route path="settings" element={<Layout />}>
             <Route index element={<SettingsMenu />} />
             <Route path="lang" element={<SettingsLang />} />
+            <Route path="update" element={<SettingsUpdate />} />
+            <Route path="shutdown" element={<SettingsShutdown />} />
             <Route path="*" element={<NotFound />} />
           </Route>
 

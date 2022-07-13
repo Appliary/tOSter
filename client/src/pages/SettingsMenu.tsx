@@ -16,7 +16,7 @@ export default class SettingsMenu extends Component {
     wifi: "•••",
     bt: "•••",
     ip: "•••",
-    lang: "•••",
+    lang: <Trans>currentLang</Trans>,
     tz: "•••",
     version: "•••",
     update: "",
@@ -27,12 +27,12 @@ export default class SettingsMenu extends Component {
       <div className={Styles.menu}>
         <Topnav active="settings" />
         <Scrollable>
-          <ListItem to="/faces"             icon='face'    sub={this.state.faces}  ><Trans>manageFaces</Trans></ListItem>
-          <ListItem to="/leds"              icon='led'     sub={this.state.leds}   ><Trans>manageLeds</Trans></ListItem>
+          <ListItem to="/faces"             icon='face'    sub={this.state.faces}  ><Trans>manageFaces</Trans>👷</ListItem>
+          <ListItem to="/leds"              icon='led'     sub={this.state.leds}   ><Trans>manageLeds</Trans>👷</ListItem>
           <ListSpacer />
-          <ListItem to="/settings/wifi"     icon='wifi'    sub={this.state.wifi}   ><Trans>wifi</Trans></ListItem>
+          <ListItem to="/settings/wifi"     icon='wifi'    sub={this.state.wifi}   ><Trans>wifi</Trans>👷</ListItem>
           <ListItem to="/settings/bt"       icon='bt'      sub={this.state.bt}     ><Trans>bluetooth</Trans>👷</ListItem>
-          <ListItem to="/settings/remote"   icon='remote'  sub={this.state.ip}     ><Trans>remoteAccess</Trans></ListItem>
+          <ListItem to="/settings/remote"   icon='remote'  sub={this.state.ip}     ><Trans>remoteAccess</Trans>👷</ListItem>
           <ListSpacer />
           <ListItem to="/settings/lang"     icon='lang'    sub={this.state.lang}   ><Trans>language</Trans></ListItem>
           <ListItem to="/settings/tz"       icon='tz'      sub={this.state.tz}     ><Trans>timezone</Trans>👷</ListItem>

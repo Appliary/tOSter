@@ -4,7 +4,7 @@ import Axios from "axios";
 
 import ListItem from "../../components/ListItem";
 import Scrollable from "../../components/Scrollable";
-import Topnav, { Button } from "../../components/Topnav";
+import Topnav, { SettingsBtn } from "../../components/Topnav";
 import Sidebar from "../../components/Sidebar";
 
 export default class FacesList extends Component {
@@ -17,10 +17,8 @@ export default class FacesList extends Component {
     return (
       <div>
         <Topnav>
-          <Button to="/settings">
-            <img src="/icons/left.png" alt="" />
-            <Trans>Back</Trans>
-          </Button>
+          <SettingsBtn />
+          <h1><Trans>manageLeds</Trans></h1>
         </Topnav>
         <Sidebar>
           <Scrollable>

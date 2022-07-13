@@ -1,5 +1,6 @@
 import { Trans } from 'react-i18next';
 
+import Icon from "../components/Icon";
 import Topnav, { Button } from '../components/Topnav';
 import Scrollable from '../components/Scrollable';
 
@@ -9,9 +10,10 @@ const About = () => {
   return <div className={Styles.menu}>
     <Topnav>
       <Button to="/settings">
-        <img src="/icons/left.png" alt="" />
+        <Icon name="left" />
         <Trans>Back</Trans>
       </Button>
+      <h1><Trans>about</Trans></h1>
     </Topnav>
     <Scrollable>
       <div style={{textAlign: 'center', margin: 25}}>

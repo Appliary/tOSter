@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Icon from './Icon';
 
 import Styles from './ListItem.module.css';
 
@@ -7,7 +8,7 @@ const ListItem = (props: any) => {
     return (
       <Link className={Styles.link} to={props.to}>
         <span className={Styles.icon}>
-          { props.icon ? <img src={`/icons/${props.icon}.png`} alt="" /> : '' }
+          <Icon name={props.icon} />
         </span>
         <span>{props.children}</span>
         <span className={Styles.sub}>
@@ -22,7 +23,7 @@ const ListItem = (props: any) => {
     return (
       <div className={Styles.link} onClick={props.onClick}>
         <span className={Styles.icon}>
-          { props.icon ? <img src={`/icons/${props.icon}.png`} alt="" /> : '' }
+          <Icon name={props.icon} />
         </span>
         <span>{props.children}</span>
         <span className={Styles.sub}>{props.sub}</span>
@@ -33,7 +34,7 @@ const ListItem = (props: any) => {
   return (
     <div className={Styles.line}>
       <span className={Styles.icon}>
-        { props.icon ? <img src={`/icons/${props.icon}.png`} alt="" /> : '' }
+        <Icon name={props.icon} />
       </span>
       <span>{props.children}</span>
       <span className={Styles.sub}>{props.sub}</span>

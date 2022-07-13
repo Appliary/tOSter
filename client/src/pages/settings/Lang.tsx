@@ -1,6 +1,6 @@
 import { Trans } from 'react-i18next';
 
-import Topnav, { Button } from '../../components/Topnav';
+import Topnav, { SettingsBtn } from '../../components/Topnav';
 import Scrollable from '../../components/Scrollable';
 import ListItem from '../../components/ListItem';
 
@@ -13,10 +13,8 @@ const SettingsMenu = () => {
 
   return <div className={Styles.menu}>
     <Topnav>
-      <Button to="/settings">
-        <img src="/icons/left.png" alt="" />
-        <Trans>Back</Trans>
-      </Button>
+      <SettingsBtn />
+      <h1><Trans>language</Trans></h1>
     </Topnav>
     <Scrollable>
       {

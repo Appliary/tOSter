@@ -27,3 +27,12 @@
   opacity: 0.5;
   text-align: right;
 }
+
+.unplug {
+  background: url('../../public/unplug.jpg');
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  text-align: center;
+}

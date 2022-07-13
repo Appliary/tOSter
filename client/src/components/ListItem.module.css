@@ -32,11 +32,6 @@ span.icon {
   max-width: 32px;
 }
 
-.icon img {
-  height: 20px;
-  float: left;
-}
-
 .line:last-child, .link:last-child {
   border-bottom: 0px;
 }

@@ -4,6 +4,7 @@ import { Trans } from 'react-i18next';
 import Clock from "../components/Clock";
 
 import Styles from './Topnav.module.css';
+import Icon from "./Icon";
 
 const Topnav = (props: any) => {
   if (!props.children) {
@@ -16,10 +17,10 @@ const Topnav = (props: any) => {
           <Trans>Settings</Trans>
         </Button>
         <Button to="/settings/fan" active={props.active==='fan'} right>
-          Fan
+          <Icon name="fan" rotate/>
         </Button>
         <Button to="/settings/brightness" active={props.active==='brightness'}>
-          Bri
+          <Icon name="brightness" />
         </Button>
         <Button to="/apps/alarms" active={props.active==='clock'}>
           <Clock />
@@ -46,5 +47,12 @@ export const Button = (props: any) => {
     </Link>
   )
 }
+
+export const SettingsBtn = (props: any) => (
+  <Button to="/settings">
+    <Icon name="left" />
+    <Trans>Settings</Trans>
+  </Button>
+);
 
 export default Topnav;

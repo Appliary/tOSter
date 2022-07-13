@@ -6,6 +6,11 @@
 
 .topnav a {
   padding: 10px 15px;
+  cursor: pointer;
+}
+
+.topnav a * {
+  cursor: pointer;
 }
 
 .topnav a:hover {
@@ -21,11 +26,14 @@ a.activeBtn:hover {
 }
 
 .rightBtn {
-  justify-self: right;
   margin-left: auto;
 }
 
-.topnav img {
-  height: 12px;
-  margin-right: 5px;
+.topnav h1 {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 15px;
+  font-size: 15px;
+  text-align: center;
+  justify-self: center;
 }
